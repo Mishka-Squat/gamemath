@@ -663,6 +663,10 @@ func (v Of[T]) DivByConstant(t float64) Of[T] {
 	return v.Scale(1.0 / t)
 }
 
+func (v Of[T]) DivByConstantF(t float32) Of[T] {
+	return v.ScaleF(1.0 / t)
+}
+
 func (v Of[T]) Project(normal Of[T]) Of[T] {
 	vdn := float64(v.Dot(normal))
 	ndn := float64(normal.Dot(normal))
