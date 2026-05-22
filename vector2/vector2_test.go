@@ -76,7 +76,7 @@ func TestOperations(t *testing.T) {
 		"scale f":        {got: start.ScaleF(2.), want: vector2.New(2.4, -4.8)},
 		"scale by vec":   {got: start.ScaleByVector(vector2.New(2., 4.)), want: vector2.New(2.4, -9.6)},
 		"scale by vec f": {got: start.ScaleByVectorF(vector2.New[float32](2., 4.)), want: vector2.New(2.4, -9.6)},
-		"mult by vec":    {got: start.MultByVector(vector2.New(2., 4.)), want: vector2.New(2.4, -9.6)},
+		"mul by vec":     {got: start.MulByVector(vector2.New(2., 4.)), want: vector2.New(2.4, -9.6)},
 		"div by vec":     {got: start.DivByVector(vector2.New(2., 4.)), want: vector2.New(0.6, -0.6)},
 		"center":         {got: vector2.Midpoint(start, vector2.New(2.4, 2.4)), want: vector2.New(1.8, 0.)},
 		"fill":           {got: vector2.Fill(9.3), want: vector2.New(9.3, 9.3)},

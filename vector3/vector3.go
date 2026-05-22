@@ -723,8 +723,8 @@ func (v Of[T]) Refract(normal Of[T], etaiOverEtat float64) Of[T] {
 	return perpendicular.Add(parallel)
 }
 
-// MultByVector is component wise multiplication, also known as Hadamard product.
-func (v Of[T]) MultByVector(o Of[T]) Of[T] {
+// MulByVector is component wise multiplication, also known as Hadamard product.
+func (v Of[T]) MulByVector(o Of[T]) Of[T] {
 	return Of[T]{
 		X: v.X * o.X,
 		Y: v.Y * o.Y,

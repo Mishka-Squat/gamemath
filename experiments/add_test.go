@@ -16,9 +16,9 @@ func BenchmarkAddVector(b *testing.B) {
 	vb := vector3.New(2., 3., 4.)
 
 	for n := 0; n < b.N; n++ {
-		r = r.Add(va).MultByVector(va).
-			Add(va.Reciprocal()).MultByVector(va.Reciprocal()).
-			MultByVector(vb.Reciprocal()).Add(vb.Reciprocal())
+		r = r.Add(va).MulByVector(va).
+			Add(va.Reciprocal()).MulByVector(va.Reciprocal()).
+			MulByVector(vb.Reciprocal()).Add(vb.Reciprocal())
 	}
 	addResultFloat64 = r
 	runtime.KeepAlive(r)
@@ -30,9 +30,9 @@ func BenchmarkAddMutableVector(b *testing.B) {
 	vb := MVector[float64]{2., 3., 4.}
 
 	for n := 0; n < b.N; n++ {
-		r = r.Add(va).MultByVector(va).
-			Add(va.Reciprocal()).MultByVector(va.Reciprocal()).
-			MultByVector(vb.Reciprocal()).Add(vb.Reciprocal())
+		r = r.Add(va).MulByVector(va).
+			Add(va.Reciprocal()).MulByVector(va.Reciprocal()).
+			MulByVector(vb.Reciprocal()).Add(vb.Reciprocal())
 	}
 	addResultMFloat64 = r
 	runtime.KeepAlive(r)

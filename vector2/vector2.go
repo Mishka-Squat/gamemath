@@ -680,7 +680,7 @@ func (v Of[T]) ScaleByXYI(x, y int) Of[T] {
 	}
 }
 
-func (v Of[T]) MultByVector(o Of[T]) Of[T] {
+func (v Of[T]) MulByVector(o Of[T]) Of[T] {
 	return Of[T]{
 		X: v.X * o.X,
 		Y: v.Y * o.Y,
@@ -700,6 +700,47 @@ func (v Of[T]) DivByConstant(t float64) Of[T] {
 
 func (v Of[T]) DivByConstantF(t float32) Of[T] {
 	return v.ScaleF(1.0 / t)
+}
+
+// Rotate a vector
+func (v Of[T]) RotateVector(q Of[T]) Of[T] {
+	return Of[T]{
+		X: q.X*v.X - q.Y*v.Y,
+		Y: q.Y*v.X + q.X*v.Y,
+	}
+}
+
+// Inverse rotate a vector
+func (v Of[T]) InvRotateVector(q Of[T]) Of[T] {
+	return Of[T]{
+		X: q.X*v.X + q.Y*v.Y,
+		Y: -q.Y*v.X + q.X*v.Y,
+	}
+}
+
+// Multiply two rotations: q * r
+func (v Of[T]) MulRot(u Of[T]) Of[T] {
+	// [vc -vs] * [uc -us] = [vc*uc-vs*us -vc*us-vs*uc]
+	// [vs  vc]   [us  uc]   [vs*uc+vc*us -vs*us+vc*uc]
+	// s(v + u) = vs * uc + vc * us
+	// c(v + u) = vc * uc - vs * us
+	return Of[T]{
+		X: v.X*u.X - v.Y*u.Y,
+		Y: v.Y*u.X + v.X*u.Y,
+	}
+}
+
+// Transpose multiply two rotations: inv(a) * b
+// This rotates a vector local in frame b into a vector local in frame a
+func (v Of[T]) InvMulRot(u Of[T]) Of[T] {
+	// [ vc vs] * [uc -us] = [vc*uc+qs*us -vc*us+vs*uc]
+	// [-vs vc]   [us  uc]   [-vs*uc+vc*us vs*us+vc*uc]
+	// s(v - u) = vc * us - vs * uc
+	// c(v - u) = vc * uc + vs * us
+	return Of[T]{
+		X: v.X*u.X + v.Y*u.Y,
+		Y: v.X*u.Y - v.Y*u.X,
+	}
 }
 
 func (v Of[T]) Project(normal Of[T]) Of[T] {

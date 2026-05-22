@@ -43,7 +43,7 @@ func TestOperations(t *testing.T) {
 		"zoom by vec f":  {got: start.ZoomByVectorF(vector2.New[float32](2., 4.)), want: rect2.New(vector2.New(2.4, -9.6), vector2.New(21.6, 49.6))},
 		"zoom by xy":     {got: start.ZoomByXY(2., 4.), want: rect2.New(vector2.New(2.4, -9.6), vector2.New(21.6, 49.6))},
 		"zoom by xy f":   {got: start.ZoomByXYF(2., 4.), want: rect2.New(vector2.New(2.4, -9.6), vector2.New(21.6, 49.6))},
-		//"mult by vec":    {got: start.MultByVector(vector2.New(2., 4.)), want: vector2.New(2.4, -9.6)},
+		//"mul by vec":    {got: start.MulByVector(vector2.New(2., 4.)), want: vector2.New(2.4, -9.6)},
 		//"div by vec":     {got: start.DivByVector(vector2.New(2., 4.)), want: vector2.New(0.6, -0.6)},
 		//"center":         {got: vector2.Midpoint(start, vector2.New(2.4, 2.4)), want: vector2.New(1.8, 0.)},
 		//"fill":           {got: vector2.Fill(9.3), want: vector2.New(9.3, 9.3)},

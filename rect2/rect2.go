@@ -548,7 +548,7 @@ func (r Of[T]) OverlappedBy(or Of[T]) bool {
 
 func (r Of[T]) Pivot(anchor vector2.Of[T], xy vector2.Of[T]) Of[T] {
 	return Of[T]{
-		Position: xy.Sub(anchor.MultByVector(r.Size)),
+		Position: xy.Sub(anchor.MulByVector(r.Size)),
 		Size:     r.Size,
 	}
 }

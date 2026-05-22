@@ -592,8 +592,8 @@ func (v Of[T]) CeilToInt() Of[int] {
 	)
 }
 
-// MultByVector is component wise multiplication, also known as Hadamard product.
-func (v Of[T]) MultByVector(o Of[T]) Of[T] {
+// MulByVector is component wise multiplication, also known as Hadamard product.
+func (v Of[T]) MulByVector(o Of[T]) Of[T] {
 	return Of[T]{
 		X: v.X * o.X,
 		Y: v.Y * o.Y,

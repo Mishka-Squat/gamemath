@@ -24,7 +24,7 @@ func (v MVector[T]) Add(a MVector[T]) MVector[T] {
 	}
 }
 
-func (v MVector[T]) MultByVector(a MVector[T]) MVector[T] {
+func (v MVector[T]) MulByVector(a MVector[T]) MVector[T] {
 	return MVector[T]{
 		X: v.X * a.X,
 		Y: v.Y * a.Y,
