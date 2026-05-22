@@ -68,6 +68,41 @@ func NewInt8[XT, YT mathex.Number](x XT, y YT) Int8 {
 	return NewT[int8](x, y)
 }
 
+func NewPolarT[T mathex.SignedNumber, RT, PHIT mathex.Number](r RT, phi PHIT) Of[T] {
+	return Of[T]{
+		X: T(float64(r) * math.Cos(float64(phi))),
+		Y: T(float64(r) * math.Sin(float64(phi))),
+	}
+}
+
+func NewPolarFloat64[RT, PHIT mathex.Number](r RT, phi PHIT) Float64 {
+	return NewPolarT[float64](r, phi)
+}
+
+func NewPolarFloat32[RT, PHIT mathex.Number](r RT, phi PHIT) Float32 {
+	return NewPolarT[float32](r, phi)
+}
+
+func NewPolarInt[RT, PHIT mathex.Number](r RT, phi PHIT) Int {
+	return NewPolarT[int](r, phi)
+}
+
+func NewPolarInt64[RT, PHIT mathex.Number](r RT, phi PHIT) Int64 {
+	return NewPolarT[int64](r, phi)
+}
+
+func NewPolarInt32[RT, PHIT mathex.Number](r RT, phi PHIT) Int32 {
+	return NewPolarT[int32](r, phi)
+}
+
+func NewPolarInt16[RT, PHIT mathex.Number](r RT, phi PHIT) Int16 {
+	return NewPolarT[int16](r, phi)
+}
+
+func NewPolarInt8[RT, PHIT mathex.Number](r RT, phi PHIT) Int8 {
+	return NewPolarT[int8](r, phi)
+}
+
 // Fill creates a vector where each component is equal to v
 func Fill[T mathex.SignedNumber](v T) Of[T] {
 	return Of[T]{
