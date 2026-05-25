@@ -159,6 +159,14 @@ func MaxInt8() Int8 {
 	return New[int8](math.MaxInt8, math.MaxInt8)
 }
 
+func NanFloat64() Float64 {
+	return New(math.NaN(), math.NaN())
+}
+
+func NanFloat32() Float32 {
+	return New(float32(math.NaN()), float32(math.NaN()))
+}
+
 // Fill creates a vector where each component is equal to v
 func Fill[T mathex.SignedNumber](v T) Of[T] {
 	return Of[T]{
@@ -252,6 +260,10 @@ func (v Of[T]) ZeroF(epsilon float32) Float32 {
 	}
 
 	return fv
+}
+
+func (v Of[T]) IsNan() bool {
+	return v.X != v.X || v.Y != v.Y
 }
 
 func (v Of[T]) Inv() Float64 {

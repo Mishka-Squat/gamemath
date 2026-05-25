@@ -12,10 +12,6 @@ type Of[T mathex.SignedNumber] struct {
 	Size     vector2.Of[T]
 }
 
-func (v Of[T]) IsZero() bool {
-	return v.Position.IsZero() && v.Size.IsZero()
-}
-
 type (
 	Float64 = Of[float64]
 	Float32 = Of[float32]
@@ -98,6 +94,10 @@ func One[T mathex.SignedNumber]() Of[T] {
 
 func (r Of[T]) String() string {
 	return fmt.Sprintf("Position: %v; Size: %v;", r.Position, r.Size)
+}
+
+func (v Of[T]) IsZero() bool {
+	return v.Position.IsZero() && v.Size.IsZero()
 }
 
 func (r Of[T]) A() vector2.Of[T] {
