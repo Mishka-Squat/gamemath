@@ -103,6 +103,62 @@ func NewPolarInt8[RT, PHIT mathex.Number](r RT, phi PHIT) Int8 {
 	return NewPolarT[int8](r, phi)
 }
 
+func MinFloat64() Float64 {
+	return New[float64](-math.MaxFloat64, -math.MaxFloat64)
+}
+
+func MinFloat32() Float32 {
+	return New[float32](-math.MaxFloat32, -math.MaxFloat32)
+}
+
+func MinInt() Int {
+	return New[int](math.MinInt, math.MinInt)
+}
+
+func MinInt64() Int64 {
+	return New[int64](math.MinInt64, math.MinInt64)
+}
+
+func MinInt32() Int32 {
+	return New[int32](math.MinInt32, math.MinInt32)
+}
+
+func MinInt16() Int16 {
+	return New[int16](math.MinInt16, math.MinInt16)
+}
+
+func MinInt8() Int8 {
+	return New[int8](math.MinInt8, math.MinInt8)
+}
+
+func MaxFloat64() Float64 {
+	return New[float64](math.MaxFloat64, math.MaxFloat64)
+}
+
+func MaxFloat32() Float32 {
+	return New[float32](math.MaxFloat32, math.MaxFloat32)
+}
+
+func MaxInt() Int {
+	return New[int](math.MaxInt, math.MaxInt)
+}
+
+func MaxInt64() Int64 {
+	return New[int64](math.MaxInt64, math.MaxInt64)
+}
+
+func MaxInt32() Int32 {
+	return New[int32](math.MaxInt32, math.MaxInt32)
+}
+
+func MaxInt16() Int16 {
+	return New[int16](math.MaxInt16, math.MaxInt16)
+}
+
+func MaxInt8() Int8 {
+	return New[int8](math.MaxInt8, math.MaxInt8)
+}
+
 // Fill creates a vector where each component is equal to v
 func Fill[T mathex.SignedNumber](v T) Of[T] {
 	return Of[T]{
