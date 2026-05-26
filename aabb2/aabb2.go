@@ -56,6 +56,18 @@ func (v Of[T]) IsNan() bool {
 	return v.A.IsNan() || v.B.IsNan()
 }
 
+func (v Of[T]) Width() T {
+	return v.A.X - v.B.X
+}
+
+func (v Of[T]) Height() T {
+	return v.A.Y - v.B.Y
+}
+
+func (v Of[T]) Size() vector2.Of[T] {
+	return vector2.NewT[T](v.Width(), v.Height())
+}
+
 // Does a fully contain b
 func (a Of[T]) Contains(b Of[T]) bool {
 	return a.A.X <= b.A.X &&
