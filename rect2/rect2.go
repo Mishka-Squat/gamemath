@@ -50,6 +50,13 @@ func NewT[T mathex.SignedNumber, PT, ST mathex.SignedNumber](position vector2.Of
 	}
 }
 
+func NewXYWHT[T, XT, YT, WT, HT mathex.SignedNumber](x XT, y YT, w WT, h HT) Of[T] {
+	return Of[T]{
+		Position: vector2.NewT[T](x, y),
+		Size:     vector2.NewT[T](w, h),
+	}
+}
+
 func NewFloat64[PT, ST mathex.SignedNumber](position vector2.Of[PT], size vector2.Of[ST]) Float64 {
 	return NewT[float64](position, size)
 }
