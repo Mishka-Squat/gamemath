@@ -426,6 +426,24 @@ func (r Of[T]) ShrinkXYWH(left, top, right, bottom T) Of[T] {
 	}
 }
 
+func (r Of[T]) Centered() Of[T] {
+	return r.AddPosition(r.Center())
+}
+
+func (r Of[T]) Aspect() vector2.Of[float64] {
+	return vector2.Of[float64]{
+		X: float64(r.Size.X) / float64(r.Size.Y),
+		Y: r.Size.Length(),
+	}
+}
+
+func (r Of[T]) AspectF() vector2.Of[float32] {
+	return vector2.Of[float32]{
+		X: float32(r.Size.X) / float32(r.Size.Y),
+		Y: r.Size.LengthF(),
+	}
+}
+
 func (r Of[T]) Scale(f float64) Of[T] {
 	return Of[T]{
 		Position: r.Position,
