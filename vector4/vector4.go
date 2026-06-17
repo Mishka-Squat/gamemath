@@ -30,8 +30,8 @@ type (
 	Int8    = Of[int8]
 )
 
-// New creates a new vector with corresponding 3 components
-func New[T mathex.SignedNumber](x, y, z, w T) Of[T] {
+// Make creates a new vector with corresponding 3 components
+func Make[T mathex.SignedNumber](x, y, z, w T) Of[T] {
 	return Of[T]{
 		X: x,
 		Y: y,
@@ -40,7 +40,7 @@ func New[T mathex.SignedNumber](x, y, z, w T) Of[T] {
 	}
 }
 
-func NewT[T mathex.SignedNumber, XT, YT, ZT, WT mathex.Number](x XT, y YT, z ZT, w WT) Of[T] {
+func MakeT[T mathex.SignedNumber, XT, YT, ZT, WT mathex.Number](x XT, y YT, z ZT, w WT) Of[T] {
 	return Of[T]{
 		X: T(x),
 		Y: T(y),
@@ -49,32 +49,32 @@ func NewT[T mathex.SignedNumber, XT, YT, ZT, WT mathex.Number](x XT, y YT, z ZT,
 	}
 }
 
-func NewFloat64[XT, YT, ZT, WT mathex.Number](x XT, y YT, z ZT, w WT) Float64 {
-	return NewT[float64](x, y, z, w)
+func MakeFloat64[XT, YT, ZT, WT mathex.Number](x XT, y YT, z ZT, w WT) Float64 {
+	return MakeT[float64](x, y, z, w)
 }
 
-func NewFloat32[XT, YT, ZT, WT mathex.Number](x XT, y YT, z ZT, w WT) Float32 {
-	return NewT[float32](x, y, z, w)
+func MakeFloat32[XT, YT, ZT, WT mathex.Number](x XT, y YT, z ZT, w WT) Float32 {
+	return MakeT[float32](x, y, z, w)
 }
 
-func NewInt[XT, YT, ZT, WT mathex.Number](x XT, y YT, z ZT, w WT) Int {
-	return NewT[int](x, y, z, w)
+func MakeInt[XT, YT, ZT, WT mathex.Number](x XT, y YT, z ZT, w WT) Int {
+	return MakeT[int](x, y, z, w)
 }
 
-func NewInt64[XT, YT, ZT, WT mathex.Number](x XT, y YT, z ZT, w WT) Int64 {
-	return NewT[int64](x, y, z, w)
+func MakeInt64[XT, YT, ZT, WT mathex.Number](x XT, y YT, z ZT, w WT) Int64 {
+	return MakeT[int64](x, y, z, w)
 }
 
-func NewInt32[XT, YT, ZT, WT mathex.Number](x XT, y YT, z ZT, w WT) Int32 {
-	return NewT[int32](x, y, z, w)
+func MakeInt32[XT, YT, ZT, WT mathex.Number](x XT, y YT, z ZT, w WT) Int32 {
+	return MakeT[int32](x, y, z, w)
 }
 
-func NewInt16[XT, YT, ZT, WT mathex.Number](x XT, y YT, z ZT, w WT) Int16 {
-	return NewT[int16](x, y, z, w)
+func MakeInt16[XT, YT, ZT, WT mathex.Number](x XT, y YT, z ZT, w WT) Int16 {
+	return MakeT[int16](x, y, z, w)
 }
 
-func NewInt8[XT, YT, ZT, WT mathex.Number](x XT, y YT, z ZT, w WT) Int8 {
-	return NewT[int8](x, y, z, w)
+func MakeInt8[XT, YT, ZT, WT mathex.Number](x XT, y YT, z ZT, w WT) Int8 {
+	return MakeT[int8](x, y, z, w)
 }
 
 // Fill creates a vector where each component is equal to v
@@ -89,17 +89,17 @@ func Fill[T mathex.SignedNumber](v T) Of[T] {
 
 func FromColor(c color.Color) Float64 {
 	r, g, b, a := c.RGBA()
-	return New(float64(r)/0xffff, float64(g)/0xffff, float64(b)/0xffff, float64(a)/0xffff)
+	return Make(float64(r)/0xffff, float64(g)/0xffff, float64(b)/0xffff, float64(a)/0xffff)
 }
 
 // Zero is (0, 0, 0)
 func Zero[T mathex.SignedNumber]() Of[T] {
-	return New[T](0, 0, 0, 0)
+	return Make[T](0, 0, 0, 0)
 }
 
 // One is (1, 1, 1)
 func One[T mathex.SignedNumber]() Of[T] {
-	return New[T](1, 1, 1, 1)
+	return Make[T](1, 1, 1, 1)
 }
 
 func Compare[T mathex.SignedNumber](a, b Of[T]) int {
@@ -183,7 +183,7 @@ func (v Of[T]) DivByConstant(t float64) Of[T] {
 }
 
 func Min[T mathex.SignedNumber](a, b Of[T]) Of[T] {
-	return New(
+	return Make(
 		min(a.X, b.X),
 		min(a.Y, b.Y),
 		min(a.Z, b.Z),
@@ -192,7 +192,7 @@ func Min[T mathex.SignedNumber](a, b Of[T]) Of[T] {
 }
 
 func Max[T mathex.SignedNumber](a, b Of[T]) Of[T] {
-	return New(
+	return Make(
 		max(a.X, b.X),
 		max(a.Y, b.Y),
 		max(a.Z, b.Z),
@@ -501,7 +501,7 @@ func (v Of[T]) LengthSquared() T {
 
 // Sqrt applies the Sqrt to each component of the vector
 func (v Of[T]) Sqrt() Of[T] {
-	return New(
+	return Make(
 		mathex.Sqrt(v.X),
 		mathex.Sqrt(v.Y),
 		mathex.Sqrt(v.Z),
@@ -511,7 +511,7 @@ func (v Of[T]) Sqrt() Of[T] {
 
 // Abs applies the Abs math operation to each component of the vector
 func (v Of[T]) Abs() Of[T] {
-	return New(
+	return Make(
 		mathex.Abs(v.X),
 		mathex.Abs(v.Y),
 		mathex.Abs(v.Z),
@@ -531,7 +531,7 @@ func (v Of[T]) Clamp(vmin, vmax T) Of[T] {
 // Round takes each component of the vector and rounds it to the nearest whole
 // number
 func (v Of[T]) Round() Of[T] {
-	return New(
+	return Make(
 		mathex.Round(v.X),
 		mathex.Round(v.Y),
 		mathex.Round(v.Z),
@@ -542,7 +542,7 @@ func (v Of[T]) Round() Of[T] {
 // RoundToInt takes each component of the vector and rounds it to the nearest
 // whole number, and then casts it to a int
 func (v Of[T]) RoundToInt() Of[int] {
-	return New(
+	return Make(
 		int(mathex.Round(v.X)),
 		int(mathex.Round(v.Y)),
 		int(mathex.Round(v.Z)),
@@ -552,7 +552,7 @@ func (v Of[T]) RoundToInt() Of[int] {
 
 // Floor applies the floor math operation to each component of the vector
 func (v Of[T]) Floor() Of[T] {
-	return New(
+	return Make(
 		mathex.Floor(v.X),
 		mathex.Floor(v.Y),
 		mathex.Floor(v.Z),
@@ -563,7 +563,7 @@ func (v Of[T]) Floor() Of[T] {
 // FloorToInt applies the floor math operation to each component of the vector,
 // and then casts it to a int
 func (v Of[T]) FloorToInt() Of[int] {
-	return New(
+	return Make(
 		int(mathex.Floor(v.X)),
 		int(mathex.Floor(v.Y)),
 		int(mathex.Floor(v.Z)),
@@ -573,7 +573,7 @@ func (v Of[T]) FloorToInt() Of[int] {
 
 // Ceil applies the ceil math operation to each component of the vector
 func (v Of[T]) Ceil() Of[T] {
-	return New(
+	return Make(
 		mathex.Ceil(v.X),
 		mathex.Ceil(v.Y),
 		mathex.Ceil(v.Z),
@@ -584,7 +584,7 @@ func (v Of[T]) Ceil() Of[T] {
 // CeilToInt applies the ceil math operation to each component of the vector,
 // and then casts it to a int
 func (v Of[T]) CeilToInt() Of[int] {
-	return New(
+	return Make(
 		int(mathex.Ceil(v.X)),
 		int(mathex.Ceil(v.Y)),
 		int(mathex.Ceil(v.Z)),
@@ -672,37 +672,37 @@ func (v Of[T]) FlipW() Of[T] {
 }
 
 func (v Of[T]) XYZ() vector3.Of[T] {
-	return vector3.New(v.X, v.Y, v.Z)
+	return vector3.Make(v.X, v.Y, v.Z)
 }
 
 // XY returns vector2 with the x and y components
 func (v Of[T]) XY() vector2.Of[T] {
-	return vector2.New(v.X, v.Y)
+	return vector2.Make(v.X, v.Y)
 }
 
 // XZ returns vector2 with the x and z components
 func (v Of[T]) XZ() vector2.Of[T] {
-	return vector2.New(v.X, v.Z)
+	return vector2.Make(v.X, v.Z)
 }
 
 // YZ returns vector2 with the y and z components
 func (v Of[T]) YZ() vector2.Of[T] {
-	return vector2.New(v.Y, v.Z)
+	return vector2.Make(v.Y, v.Z)
 }
 
 // YX returns vector2 with the y and x components
 func (v Of[T]) YX() vector2.Of[T] {
-	return vector2.New(v.Y, v.X)
+	return vector2.Make(v.Y, v.X)
 }
 
 // ZX returns vector2 with the z and x components
 func (v Of[T]) ZX() vector2.Of[T] {
-	return vector2.New(v.Z, v.X)
+	return vector2.Make(v.Z, v.X)
 }
 
 // ZY returns vector2 with the z and y components
 func (v Of[T]) ZY() vector2.Of[T] {
-	return vector2.New(v.Z, v.Y)
+	return vector2.Make(v.Z, v.Y)
 }
 
 // Log returns the natural logarithm for each component

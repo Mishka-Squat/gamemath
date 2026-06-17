@@ -12,15 +12,15 @@ import (
 )
 
 func TestToIntConversions(t *testing.T) {
-	start := vector2.New(1.2, -2.4)
+	start := vector2.Make(1.2, -2.4)
 
 	tests := map[string]struct {
 		want vector2.Int
 		got  vector2.Int
 	}{
-		"round to int": {want: start.RoundToInt(), got: vector2.New(1, -2)},
-		"floor to int": {want: start.FloorToInt(), got: vector2.New(1, -3)},
-		"ceil to int":  {want: start.CeilToInt(), got: vector2.New(2, -2)},
+		"round to int": {want: start.RoundToInt(), got: vector2.Make(1, -2)},
+		"floor to int": {want: start.FloorToInt(), got: vector2.Make(1, -3)},
+		"ceil to int":  {want: start.CeilToInt(), got: vector2.Make(2, -2)},
 	}
 
 	for name, tc := range tests {
@@ -36,9 +36,9 @@ func TestDistances(t *testing.T) {
 		b    vector2.Float64
 		want float64
 	}{
-		"(0, 0), (0, 0)":  {a: vector2.Zero[float64](), b: vector2.New(0., 0.), want: 0},
-		"(0, 0), (0, 1)":  {a: vector2.Zero[float64](), b: vector2.New(0., 1.), want: 1},
-		"(0, -1), (0, 1)": {a: vector2.New(0., -1.), b: vector2.New(0., 1.), want: 2},
+		"(0, 0), (0, 0)":  {a: vector2.Zero[float64](), b: vector2.Make(0., 0.), want: 0},
+		"(0, 0), (0, 1)":  {a: vector2.Zero[float64](), b: vector2.Make(0., 1.), want: 1},
+		"(0, -1), (0, 1)": {a: vector2.Make(0., -1.), b: vector2.Make(0., 1.), want: 2},
 	}
 
 	for name, tc := range tests {
@@ -49,7 +49,7 @@ func TestDistances(t *testing.T) {
 }
 
 func TestOperations(t *testing.T) {
-	start := vector2.New(1.2, -2.4)
+	start := vector2.Make(1.2, -2.4)
 
 	randSource := rand.NewSource(42)
 	r := rand.New(randSource)
@@ -58,44 +58,44 @@ func TestOperations(t *testing.T) {
 		want vector2.Float64
 		got  vector2.Float64
 	}{
-		"x":              {got: start.SetX(4), want: vector2.New(4., -2.4)},
-		"y":              {got: start.SetY(4), want: vector2.New(1.2, 4.)},
-		"addx":           {got: start.AddX(4), want: vector2.New(5.2, -2.4)},
-		"addy":           {got: start.AddY(4), want: vector2.New(1.2, 1.6)},
-		"abs":            {got: start.Abs(), want: vector2.New(1.2, 2.4)},
-		"floor":          {got: start.Floor(), want: vector2.New(1., -3.)},
-		"ceil":           {got: start.Ceil(), want: vector2.New(2., -2.)},
-		"round":          {got: start.Round(), want: vector2.New(1., -2.)},
-		"sqrt":           {got: start.Sqrt(), want: vector2.New(1.0954451, math.NaN())},
-		"clamp":          {got: start.Clamp(1, 2), want: vector2.New(1.2, 1.)},
-		"clampv":         {got: start.ClampV(vector2.New(0., 0.8), vector2.New(1., 2)), want: vector2.New(1., 0.8)},
-		"clamp0v":        {got: start.Clamp0V(vector2.New(1., 2.)), want: vector2.New(1., 0)},
-		"perpendicular":  {got: start.Perpendicular(), want: vector2.New(-2.4, -1.2)},
-		"normalized":     {got: start.Normalized(), want: vector2.New(0.447213, -.894427)},
-		"scale":          {got: start.Scale(2.), want: vector2.New(2.4, -4.8)},
-		"scale f":        {got: start.ScaleF(2.), want: vector2.New(2.4, -4.8)},
-		"scale by vec":   {got: start.ScaleByVector(vector2.New(2., 4.)), want: vector2.New(2.4, -9.6)},
-		"scale by vec f": {got: start.ScaleByVectorF(vector2.New[float32](2., 4.)), want: vector2.New(2.4, -9.6)},
-		"mul by vec":     {got: start.MulByVector(vector2.New(2., 4.)), want: vector2.New(2.4, -9.6)},
-		"div by vec":     {got: start.DivByVector(vector2.New(2., 4.)), want: vector2.New(0.6, -0.6)},
-		"center":         {got: vector2.Midpoint(start, vector2.New(2.4, 2.4)), want: vector2.New(1.8, 0.)},
-		"fill":           {got: vector2.Fill(9.3), want: vector2.New(9.3, 9.3)},
-		"yx":             {got: start.YX(), want: vector2.New(-2.4, 1.2)},
-		"random":         {got: vector2.Rand(r), want: vector2.New(.373028361, 0.066000496)},
-		"reciprocal":     {got: start.Reciprocal(), want: vector2.New(1/1.2, -1/2.4)},
-		"reciprocal f":   {got: start.ReciprocalF().ToFloat64(), want: vector2.New(1/1.2, -1/2.4)},
-		"negated":        {got: start.Negated(), want: vector2.New(-1.2, 2.4)},
-		"flip":           {got: start.Flip(), want: vector2.New(-1.2, 2.4)},
-		"flipX":          {got: start.FlipX(), want: vector2.New(-1.2, -2.4)},
-		"flipY":          {got: start.FlipY(), want: vector2.New(1.2, 2.4)},
+		"x":              {got: start.SetX(4), want: vector2.Make(4., -2.4)},
+		"y":              {got: start.SetY(4), want: vector2.Make(1.2, 4.)},
+		"addx":           {got: start.AddX(4), want: vector2.Make(5.2, -2.4)},
+		"addy":           {got: start.AddY(4), want: vector2.Make(1.2, 1.6)},
+		"abs":            {got: start.Abs(), want: vector2.Make(1.2, 2.4)},
+		"floor":          {got: start.Floor(), want: vector2.Make(1., -3.)},
+		"ceil":           {got: start.Ceil(), want: vector2.Make(2., -2.)},
+		"round":          {got: start.Round(), want: vector2.Make(1., -2.)},
+		"sqrt":           {got: start.Sqrt(), want: vector2.Make(1.0954451, math.NaN())},
+		"clamp":          {got: start.Clamp(1, 2), want: vector2.Make(1.2, 1.)},
+		"clampv":         {got: start.ClampV(vector2.Make(0., 0.8), vector2.Make(1., 2)), want: vector2.Make(1., 0.8)},
+		"clamp0v":        {got: start.Clamp0V(vector2.Make(1., 2.)), want: vector2.Make(1., 0)},
+		"perpendicular":  {got: start.Perpendicular(), want: vector2.Make(-2.4, -1.2)},
+		"normalized":     {got: start.Normalized(), want: vector2.Make(0.447213, -.894427)},
+		"scale":          {got: start.Scale(2.), want: vector2.Make(2.4, -4.8)},
+		"scale f":        {got: start.ScaleF(2.), want: vector2.Make(2.4, -4.8)},
+		"scale by vec":   {got: start.ScaleByVector(vector2.Make(2., 4.)), want: vector2.Make(2.4, -9.6)},
+		"scale by vec f": {got: start.ScaleByVectorF(vector2.Make[float32](2., 4.)), want: vector2.Make(2.4, -9.6)},
+		"mul by vec":     {got: start.MulByVector(vector2.Make(2., 4.)), want: vector2.Make(2.4, -9.6)},
+		"div by vec":     {got: start.DivByVector(vector2.Make(2., 4.)), want: vector2.Make(0.6, -0.6)},
+		"center":         {got: vector2.Midpoint(start, vector2.Make(2.4, 2.4)), want: vector2.Make(1.8, 0.)},
+		"fill":           {got: vector2.Fill(9.3), want: vector2.Make(9.3, 9.3)},
+		"yx":             {got: start.YX(), want: vector2.Make(-2.4, 1.2)},
+		"random":         {got: vector2.Rand(r), want: vector2.Make(.373028361, 0.066000496)},
+		"reciprocal":     {got: start.Reciprocal(), want: vector2.Make(1/1.2, -1/2.4)},
+		"reciprocal f":   {got: start.ReciprocalF().ToFloat64(), want: vector2.Make(1/1.2, -1/2.4)},
+		"negated":        {got: start.Negated(), want: vector2.Make(-1.2, 2.4)},
+		"flip":           {got: start.Flip(), want: vector2.Make(-1.2, 2.4)},
+		"flipX":          {got: start.FlipX(), want: vector2.Make(-1.2, -2.4)},
+		"flipY":          {got: start.FlipY(), want: vector2.Make(1.2, 2.4)},
 
 		// Math package functions
-		"log":   {got: start.Log(), want: vector2.New(0.1823215, math.NaN())},
-		"log10": {got: start.Log10(), want: vector2.New(0.0791812, math.NaN())},
-		"log2":  {got: start.Log2(), want: vector2.New(0.263034, math.NaN())},
-		"exp":   {got: start.Exp(), want: vector2.New(3.320116, 0.090717)},
-		"exp2":  {got: start.Exp2(), want: vector2.New(2.297396, 0.189464)},
-		"expm1": {got: start.Expm1(), want: vector2.New(2.320116, -0.909282)},
+		"log":   {got: start.Log(), want: vector2.Make(0.1823215, math.NaN())},
+		"log10": {got: start.Log10(), want: vector2.Make(0.0791812, math.NaN())},
+		"log2":  {got: start.Log2(), want: vector2.Make(0.263034, math.NaN())},
+		"exp":   {got: start.Exp(), want: vector2.Make(3.320116, 0.090717)},
+		"exp2":  {got: start.Exp2(), want: vector2.Make(2.297396, 0.189464)},
+		"expm1": {got: start.Expm1(), want: vector2.Make(2.320116, -0.909282)},
 	}
 
 	for name, tc := range tests {
@@ -111,8 +111,8 @@ func TestAdd(t *testing.T) {
 		right vector2.Float64
 		want  vector2.Float64
 	}{
-		"0, 0, 0 + 0, 0, 0 = 0, 0, 0": {left: vector2.New(0., 0.), right: vector2.New(0., 0.), want: vector2.New(0., 0.)},
-		"1, 2, 3 + 4, 5, 6 = 5, 7, 9": {left: vector2.New(1., 2.), right: vector2.New(4., 5.), want: vector2.New(5., 7.)},
+		"0, 0, 0 + 0, 0, 0 = 0, 0, 0": {left: vector2.Make(0., 0.), right: vector2.Make(0., 0.), want: vector2.Make(0., 0.)},
+		"1, 2, 3 + 4, 5, 6 = 5, 7, 9": {left: vector2.Make(1., 2.), right: vector2.Make(4., 5.), want: vector2.Make(5., 7.)},
 	}
 
 	for name, tc := range tests {
@@ -138,8 +138,8 @@ func TestSub(t *testing.T) {
 		right vector2.Float64
 		want  vector2.Float64
 	}{
-		"0, 0, 0 - 0, 0, 0 = 0, 0, 0": {left: vector2.New(0., 0.), right: vector2.New(0., 0.), want: vector2.New(0., 0.)},
-		"4, 5, 6 - 1, 2, 3 = 3, 3, 3": {left: vector2.New(4., 5.), right: vector2.New(1., 2.), want: vector2.New(3., 3.)},
+		"0, 0, 0 - 0, 0, 0 = 0, 0, 0": {left: vector2.Make(0., 0.), right: vector2.Make(0., 0.), want: vector2.Make(0., 0.)},
+		"4, 5, 6 - 1, 2, 3 = 3, 3, 3": {left: vector2.Make(4., 5.), right: vector2.Make(1., 2.), want: vector2.Make(3., 3.)},
 	}
 
 	for name, tc := range tests {
@@ -164,12 +164,12 @@ func TestDefaults(t *testing.T) {
 		got  vector2.Float64
 		want vector2.Float64
 	}{
-		"zero":  {got: vector2.Zero[float64](), want: vector2.New(0., 0.)},
-		"one":   {got: vector2.One[float64](), want: vector2.New(1., 1.)},
-		"left":  {got: vector2.Left[float64](), want: vector2.New(-1., 0.)},
-		"right": {got: vector2.Right[float64](), want: vector2.New(1., 0.)},
-		"up":    {got: vector2.Up[float64](), want: vector2.New(0., 1.)},
-		"down":  {got: vector2.Down[float64](), want: vector2.New(0., -1.)},
+		"zero":  {got: vector2.Zero[float64](), want: vector2.Make(0., 0.)},
+		"one":   {got: vector2.One[float64](), want: vector2.Make(1., 1.)},
+		"left":  {got: vector2.Left[float64](), want: vector2.Make(-1., 0.)},
+		"right": {got: vector2.Right[float64](), want: vector2.Make(1., 0.)},
+		"up":    {got: vector2.Up[float64](), want: vector2.Make(0., 1.)},
+		"down":  {got: vector2.Down[float64](), want: vector2.Make(0., -1.)},
 	}
 
 	for name, tc := range tests {
@@ -185,9 +185,9 @@ func TestMidpoint(t *testing.T) {
 		right vector2.Float64
 		want  vector2.Float64
 	}{
-		"0, 0 m 0, 0 = 0, 0":   {left: vector2.New(0., 0.), right: vector2.New(0., 0.), want: vector2.New(0., 0.)},
-		"-1, -1 m 1, 1 = 0, 0": {left: vector2.New(-1., -1.), right: vector2.New(1., 1.), want: vector2.New(0., 0.)},
-		"0, 0 m 1, 2 = 0.5, 1": {left: vector2.New(0., 0.), right: vector2.New(1., 2.), want: vector2.New(0.5, 1.)},
+		"0, 0 m 0, 0 = 0, 0":   {left: vector2.Make(0., 0.), right: vector2.Make(0., 0.), want: vector2.Make(0., 0.)},
+		"-1, -1 m 1, 1 = 0, 0": {left: vector2.Make(-1., -1.), right: vector2.Make(1., 1.), want: vector2.Make(0., 0.)},
+		"0, 0 m 1, 2 = 0.5, 1": {left: vector2.Make(0., 0.), right: vector2.Make(1., 2.), want: vector2.Make(0.5, 1.)},
 	}
 
 	for name, tc := range tests {
@@ -206,9 +206,9 @@ func TestLerp(t *testing.T) {
 		t     float32
 		want  vector2.Float64
 	}{
-		"(0, 0) =(0)=> (0, 0) = (0, 0)":     {left: vector2.New(0., 0.), right: vector2.New(0., 0.), t: 0, want: vector2.New(0., 0.)},
-		"(0, 0) =(0.5)=> (1, 2) = (0.5, 1)": {left: vector2.New(0., 0.), right: vector2.New(1., 2.), t: 0.5, want: vector2.New(0.5, 1.)},
-		"(0, 0) =(1)=> (1, 2) = (1, 2)":     {left: vector2.New(0., 0.), right: vector2.New(1., 2.), t: 1, want: vector2.New(1., 2.)},
+		"(0, 0) =(0)=> (0, 0) = (0, 0)":     {left: vector2.Make(0., 0.), right: vector2.Make(0., 0.), t: 0, want: vector2.Make(0., 0.)},
+		"(0, 0) =(0.5)=> (1, 2) = (0.5, 1)": {left: vector2.Make(0., 0.), right: vector2.Make(1., 2.), t: 0.5, want: vector2.Make(0.5, 1.)},
+		"(0, 0) =(1)=> (1, 2) = (1, 2)":     {left: vector2.Make(0., 0.), right: vector2.Make(1., 2.), t: 1, want: vector2.Make(1., 2.)},
 	}
 
 	for name, tc := range tests {
@@ -226,7 +226,7 @@ func TestMin(t *testing.T) {
 		right vector2.Float64
 		want  vector2.Float64
 	}{
-		"(1, 2) m (3, 2) = (1, 2)": {left: vector2.New(1., 2.), right: vector2.New(3., 2.), want: vector2.New(1., 2.)},
+		"(1, 2) m (3, 2) = (1, 2)": {left: vector2.Make(1., 2.), right: vector2.Make(3., 2.), want: vector2.Make(1., 2.)},
 	}
 
 	for name, tc := range tests {
@@ -244,7 +244,7 @@ func TestMax(t *testing.T) {
 		right vector2.Float64
 		want  vector2.Float64
 	}{
-		"(1, 2) m (3, 2) = (3, 2)": {left: vector2.New(1., 2.), right: vector2.New(3., 2.), want: vector2.New(3., 2.)},
+		"(1, 2) m (3, 2) = (3, 2)": {left: vector2.Make(1., 2.), right: vector2.Make(3., 2.), want: vector2.Make(3., 2.)},
 	}
 
 	for name, tc := range tests {
@@ -261,9 +261,9 @@ func TestNearZero(t *testing.T) {
 		vec  vector2.Float64
 		want bool
 	}{
-		"0, 0, 0":           {vec: vector2.New(0., 0.), want: true},
-		"0, 0, 1":           {vec: vector2.New(0., 1.), want: false},
-		"0, 0, .0000000001": {vec: vector2.New(0., 0.0000000001), want: true},
+		"0, 0, 0":           {vec: vector2.Make(0., 0.), want: true},
+		"0, 0, 1":           {vec: vector2.Make(0., 1.), want: false},
+		"0, 0, .0000000001": {vec: vector2.Make(0., 0.0000000001), want: true},
 	}
 
 	for name, tc := range tests {
@@ -274,8 +274,8 @@ func TestNearZero(t *testing.T) {
 }
 
 func TestJSON(t *testing.T) {
-	in := vector2.New(1.2, 2.3)
-	out := vector2.New(0., 0.)
+	in := vector2.Make(1.2, 2.3)
+	out := vector2.Make(0., 0.)
 
 	marshalledData, marshallErr := json.Marshal(in)
 	unmarshallErr := json.Unmarshal(marshalledData, &out)
@@ -288,7 +288,7 @@ func TestJSON(t *testing.T) {
 }
 
 func TestBadJSON(t *testing.T) {
-	out := vector2.New(0., 0.)
+	out := vector2.Make(0., 0.)
 
 	unmarshallErr := out.UnmarshalJSON([]byte("bad json"))
 
@@ -298,33 +298,33 @@ func TestBadJSON(t *testing.T) {
 }
 
 func TestDot(t *testing.T) {
-	a := vector2.New(2, 3)
-	b := vector2.New(6, 7)
+	a := vector2.Make(2, 3)
+	b := vector2.Make(6, 7)
 
 	assert.Equal(t, 33, a.Dot(b))
 }
 
 func TestReciprocal(t *testing.T) {
-	a := vector2.New(2, 3)
+	a := vector2.Make(2, 3)
 
-	test.AssertVector2InDelta(t, vector2.New(float64(1)/2, float64(1)/3), a.Reciprocal(), 0.000001)
-	test.AssertVector2InDelta(t, vector2.New(float32(1)/2, float32(1)/3), a.ReciprocalF(), 0.000001)
+	test.AssertVector2InDelta(t, vector2.Make(float64(1)/2, float64(1)/3), a.Reciprocal(), 0.000001)
+	test.AssertVector2InDelta(t, vector2.Make(float32(1)/2, float32(1)/3), a.ReciprocalF(), 0.000001)
 }
 
 func TestProduct(t *testing.T) {
-	a := vector2.New(2, 3)
+	a := vector2.Make(2, 3)
 
 	assert.Equal(t, 6, a.Product())
 }
 
 func TestLengthSquared(t *testing.T) {
-	a := vector2.New(2, 3)
+	a := vector2.Make(2, 3)
 
 	assert.Equal(t, 13, a.LengthSquared())
 }
 
 func TestLength(t *testing.T) {
-	a := vector2.New(2, 3)
+	a := vector2.Make(2, 3)
 
 	assert.InDelta(t, 3.60555127, a.Length(), 0.000001)
 }
@@ -336,8 +336,8 @@ func TestFromArray(t *testing.T) {
 	}{
 		"nil => (0, 0, 0)":    {arr: nil, want: vector2.Zero[float64]()},
 		"[] => (0, 0, 0)":     {arr: []float64{}, want: vector2.Zero[float64]()},
-		"[1] => (1, 0, 0)":    {arr: []float64{1}, want: vector2.New(1., 0.)},
-		"[1, 2] => (1, 2, 0)": {arr: []float64{1, 2}, want: vector2.New(1., 2.)},
+		"[1] => (1, 0, 0)":    {arr: []float64{1}, want: vector2.Make(1., 0.)},
+		"[1, 2] => (1, 2, 0)": {arr: []float64{1, 2}, want: vector2.Make(1., 2.)},
 	}
 
 	for name, tc := range tests {
@@ -350,47 +350,47 @@ func TestFromArray(t *testing.T) {
 }
 
 func TestToInt(t *testing.T) {
-	in := vector2.New(1.2, 2.3)
+	in := vector2.Make(1.2, 2.3)
 	out := in.ToInt()
 	assert.Equal(t, 1, out.X)
 	assert.Equal(t, 2, out.Y)
 }
 
 func TestToInt64(t *testing.T) {
-	in := vector2.New(1.2, 2.3)
+	in := vector2.Make(1.2, 2.3)
 	out := in.ToInt64()
 	assert.Equal(t, int64(1), out.X)
 	assert.Equal(t, int64(2), out.Y)
 }
 
 func TestToFloat32(t *testing.T) {
-	in := vector2.New(1.2, 2.3)
+	in := vector2.Make(1.2, 2.3)
 	out := in.ToFloat32()
 	assert.Equal(t, float32(1.2), out.X)
 	assert.Equal(t, float32(2.3), out.Y)
 }
 
 func TestToFloat64(t *testing.T) {
-	in := vector2.New(1, 2)
+	in := vector2.Make(1, 2)
 	out := in.ToFloat64()
 	assert.Equal(t, float64(1), out.X)
 	assert.Equal(t, float64(2), out.Y)
 }
 
 func TestMaxComponent(t *testing.T) {
-	assert.Equal(t, 4., vector2.New(-2., 4.).MaxComponent())
+	assert.Equal(t, 4., vector2.Make(-2., 4.).MaxComponent())
 }
 
 func TestMinComponent(t *testing.T) {
-	assert.Equal(t, -2., vector2.New(-2., 4.).MinComponent())
+	assert.Equal(t, -2., vector2.Make(-2., 4.).MinComponent())
 }
 
 var result float64
 
 func BenchmarkDistance(b *testing.B) {
 	var r float64
-	a := vector2.New(1., 2.)
-	c := vector2.New(4., 5.)
+	a := vector2.Make(1., 2.)
+	c := vector2.Make(4., 5.)
 	for i := 0; i < b.N; i++ {
 		r = a.Distance(c)
 	}
@@ -403,8 +403,8 @@ func TestFormat(t *testing.T) {
 		formatter string
 		want      string
 	}{
-		"1 2":  {vec: vector2.New(1, 2), formatter: "%d %d", want: "1 2"},
-		"1, 2": {vec: vector2.New(1, 2), formatter: "%d, %d", want: "1, 2"},
+		"1 2":  {vec: vector2.Make(1, 2), formatter: "%d %d", want: "1 2"},
+		"1, 2": {vec: vector2.Make(1, 2), formatter: "%d, %d", want: "1, 2"},
 	}
 
 	for name, tc := range tests {
@@ -420,9 +420,9 @@ func TestContainsNaN(t *testing.T) {
 		vec  vector2.Float64
 		want bool
 	}{
-		"x nan":  {vec: vector2.New(math.NaN(), 0.), want: true},
-		"y nan":  {vec: vector2.New(0., math.NaN()), want: true},
-		"no nan": {vec: vector2.New(0., 0.), want: false},
+		"x nan":  {vec: vector2.Make(math.NaN(), 0.), want: true},
+		"y nan":  {vec: vector2.Make(0., math.NaN()), want: true},
+		"no nan": {vec: vector2.Make(0., 0.), want: false},
 	}
 
 	for name, tc := range tests {
@@ -474,15 +474,15 @@ func TestMaxMinComponents(t *testing.T) {
 		f    func(a, b vector2.Float64) float64
 		want float64
 	}{
-		"maxX((0, 0), (1, 0))": {a: vector2.New(0., 0.), b: vector2.New(1., 0.), f: vector2.MaxX[float64], want: 1},
-		"maxX((2, 0), (0, 0))": {a: vector2.New(2., 0.), b: vector2.New(0., 0.), f: vector2.MaxX[float64], want: 2},
-		"maxY((0, 0), (0, 1))": {a: vector2.New(0., 0.), b: vector2.New(0., 1.), f: vector2.MaxY[float64], want: 1},
-		"maxY((0, 2), (0, 0))": {a: vector2.New(0., 2.), b: vector2.New(0., 0.), f: vector2.MaxY[float64], want: 2},
+		"maxX((0, 0), (1, 0))": {a: vector2.Make(0., 0.), b: vector2.Make(1., 0.), f: vector2.MaxX[float64], want: 1},
+		"maxX((2, 0), (0, 0))": {a: vector2.Make(2., 0.), b: vector2.Make(0., 0.), f: vector2.MaxX[float64], want: 2},
+		"maxY((0, 0), (0, 1))": {a: vector2.Make(0., 0.), b: vector2.Make(0., 1.), f: vector2.MaxY[float64], want: 1},
+		"maxY((0, 2), (0, 0))": {a: vector2.Make(0., 2.), b: vector2.Make(0., 0.), f: vector2.MaxY[float64], want: 2},
 
-		"minX((0, 0, 0), (-1, 0))": {a: vector2.New(0., 0.), b: vector2.New(-1., 0.), f: vector2.MinX[float64], want: -1},
-		"minX((-2, 0, 0), (0, 0))": {a: vector2.New(-2., 0.), b: vector2.New(0., 0.), f: vector2.MinX[float64], want: -2},
-		"minY((0, 0, 0), (0, -1))": {a: vector2.New(0., 0.), b: vector2.New(0., -1.), f: vector2.MinY[float64], want: -1},
-		"minY((0, -2, 0), (0, 0))": {a: vector2.New(0., -2.), b: vector2.New(0., 0.), f: vector2.MinY[float64], want: -2},
+		"minX((0, 0, 0), (-1, 0))": {a: vector2.Make(0., 0.), b: vector2.Make(-1., 0.), f: vector2.MinX[float64], want: -1},
+		"minX((-2, 0, 0), (0, 0))": {a: vector2.Make(-2., 0.), b: vector2.Make(0., 0.), f: vector2.MinX[float64], want: -2},
+		"minY((0, 0, 0), (0, -1))": {a: vector2.Make(0., 0.), b: vector2.Make(0., -1.), f: vector2.MinY[float64], want: -1},
+		"minY((0, -2, 0), (0, 0))": {a: vector2.Make(0., -2.), b: vector2.Make(0., 0.), f: vector2.MinY[float64], want: -2},
 	}
 
 	for name, tc := range tests {
@@ -493,7 +493,7 @@ func TestMaxMinComponents(t *testing.T) {
 }
 
 func TestValues(t *testing.T) {
-	x, y := vector2.New(1, 2).Values()
+	x, y := vector2.Make(1, 2).Values()
 	assert.Equal(t, x, 1)
 	assert.Equal(t, y, 2)
 }
@@ -505,38 +505,38 @@ func TestGreaterEq(t *testing.T) {
 		expected bool
 	}{
 		"a > b": {
-			a:        vector2.New(3.0, 4.0),
-			b:        vector2.New(2.0, 3.0),
+			a:        vector2.Make(3.0, 4.0),
+			b:        vector2.Make(2.0, 3.0),
 			expected: true,
 		},
 		"a == b": {
-			a:        vector2.New(3.0, 4.0),
-			b:        vector2.New(3.0, 4.0),
+			a:        vector2.Make(3.0, 4.0),
+			b:        vector2.Make(3.0, 4.0),
 			expected: true,
 		},
 		"a < b": {
-			a:        vector2.New(2.0, 3.0),
-			b:        vector2.New(3.0, 4.0),
+			a:        vector2.Make(2.0, 3.0),
+			b:        vector2.Make(3.0, 4.0),
 			expected: false,
 		},
 		"a.x > b.x, a.y == b.y": {
-			a:        vector2.New(4.0, 3.0),
-			b:        vector2.New(3.0, 3.0),
+			a:        vector2.Make(4.0, 3.0),
+			b:        vector2.Make(3.0, 3.0),
 			expected: true,
 		},
 		"a.x == b.x, a.y > b.y": {
-			a:        vector2.New(3.0, 4.0),
-			b:        vector2.New(3.0, 3.0),
+			a:        vector2.Make(3.0, 4.0),
+			b:        vector2.Make(3.0, 3.0),
 			expected: true,
 		},
 		"a.x < b.x, a.y == b.y": {
-			a:        vector2.New(2.0, 3.0),
-			b:        vector2.New(3.0, 3.0),
+			a:        vector2.Make(2.0, 3.0),
+			b:        vector2.Make(3.0, 3.0),
 			expected: false,
 		},
 		"a.x == b.x, a.y < b.y": {
-			a:        vector2.New(3.0, 2.0),
-			b:        vector2.New(3.0, 3.0),
+			a:        vector2.Make(3.0, 2.0),
+			b:        vector2.Make(3.0, 3.0),
 			expected: false,
 		},
 	}
@@ -556,38 +556,38 @@ func TestLessEq(t *testing.T) {
 		expected bool
 	}{
 		"a < b": {
-			a:        vector2.New(1.0, 1.0),
-			b:        vector2.New(2.0, 2.0),
+			a:        vector2.Make(1.0, 1.0),
+			b:        vector2.Make(2.0, 2.0),
 			expected: true,
 		},
 		"a == b": {
-			a:        vector2.New(2.0, 2.0),
-			b:        vector2.New(2.0, 2.0),
+			a:        vector2.Make(2.0, 2.0),
+			b:        vector2.Make(2.0, 2.0),
 			expected: true,
 		},
 		"a > b": {
-			a:        vector2.New(3.0, 3.0),
-			b:        vector2.New(2.0, 2.0),
+			a:        vector2.Make(3.0, 3.0),
+			b:        vector2.Make(2.0, 2.0),
 			expected: false,
 		},
 		"a.x < b.x, a.y == b.y": {
-			a:        vector2.New(1.0, 2.0),
-			b:        vector2.New(2.0, 2.0),
+			a:        vector2.Make(1.0, 2.0),
+			b:        vector2.Make(2.0, 2.0),
 			expected: true,
 		},
 		"a.x == b.x, a.y < b.y": {
-			a:        vector2.New(2.0, 1.0),
-			b:        vector2.New(2.0, 2.0),
+			a:        vector2.Make(2.0, 1.0),
+			b:        vector2.Make(2.0, 2.0),
 			expected: true,
 		},
 		"a.x > b.x, a.y == b.y": {
-			a:        vector2.New(3.0, 2.0),
-			b:        vector2.New(2.0, 2.0),
+			a:        vector2.Make(3.0, 2.0),
+			b:        vector2.Make(2.0, 2.0),
 			expected: false,
 		},
 		"a.x == b.x, a.y > b.y": {
-			a:        vector2.New(2.0, 3.0),
-			b:        vector2.New(2.0, 2.0),
+			a:        vector2.Make(2.0, 3.0),
+			b:        vector2.Make(2.0, 2.0),
 			expected: false,
 		},
 	}
@@ -608,7 +608,7 @@ func TestEnumRegionAround(t *testing.T) {
 		want []vector2.Int
 	}{
 		"around (0,0) 1x1 default step": {
-			vec:  vector2.New(0, 0),
+			vec:  vector2.Make(0, 0),
 			w:    1,
 			h:    1,
 			step: nil,
@@ -619,7 +619,7 @@ func TestEnumRegionAround(t *testing.T) {
 			},
 		},
 		"around (1,1) 1x1 default step": {
-			vec:  vector2.New(1, 1),
+			vec:  vector2.Make(1, 1),
 			w:    1,
 			h:    1,
 			step: nil,
@@ -630,7 +630,7 @@ func TestEnumRegionAround(t *testing.T) {
 			},
 		},
 		"around (0,0) 1x1 step 2": {
-			vec:  vector2.New(0, 0),
+			vec:  vector2.Make(0, 0),
 			w:    1,
 			h:    1,
 			step: []int{2, 2},
@@ -660,7 +660,7 @@ func TestEnumRegion(t *testing.T) {
 		want []vector2.Int
 	}{
 		"(0,0) 2x2 default step": {
-			vec:  vector2.New(0, 0),
+			vec:  vector2.Make(0, 0),
 			w:    2,
 			h:    2,
 			step: nil,
@@ -671,7 +671,7 @@ func TestEnumRegion(t *testing.T) {
 			},
 		},
 		"(1,1) 2x2 default step": {
-			vec:  vector2.New(1, 1),
+			vec:  vector2.Make(1, 1),
 			w:    2,
 			h:    2,
 			step: nil,
@@ -682,7 +682,7 @@ func TestEnumRegion(t *testing.T) {
 			},
 		},
 		"(0,0) 2x2 step 2": {
-			vec:  vector2.New(0, 0),
+			vec:  vector2.Make(0, 0),
 			w:    2,
 			h:    2,
 			step: []int{2, 2},

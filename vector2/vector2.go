@@ -26,145 +26,145 @@ type (
 	Int8    = Of[int8]
 )
 
-func New[T mathex.SignedNumber](x T, y T) Of[T] {
+func Make[T mathex.SignedNumber](x T, y T) Of[T] {
 	return Of[T]{
 		X: x,
 		Y: y,
 	}
 }
 
-func NewT[T mathex.SignedNumber, XT, YT mathex.Number](x XT, y YT) Of[T] {
+func MakeT[T mathex.SignedNumber, XT, YT mathex.Number](x XT, y YT) Of[T] {
 	return Of[T]{
 		X: T(x),
 		Y: T(y),
 	}
 }
 
-func NewFloat64[XT, YT mathex.Number](x XT, y YT) Float64 {
-	return NewT[float64](x, y)
+func MakeFloat64[XT, YT mathex.Number](x XT, y YT) Float64 {
+	return MakeT[float64](x, y)
 }
 
-func NewFloat32[XT, YT mathex.Number](x XT, y YT) Float32 {
-	return NewT[float32](x, y)
+func MakeFloat32[XT, YT mathex.Number](x XT, y YT) Float32 {
+	return MakeT[float32](x, y)
 }
 
-func NewInt[XT, YT mathex.Number](x XT, y YT) Int {
-	return NewT[int](x, y)
+func MakeInt[XT, YT mathex.Number](x XT, y YT) Int {
+	return MakeT[int](x, y)
 }
 
-func NewInt64[XT, YT mathex.Number](x XT, y YT) Int64 {
-	return NewT[int64](x, y)
+func MakeInt64[XT, YT mathex.Number](x XT, y YT) Int64 {
+	return MakeT[int64](x, y)
 }
 
-func NewInt32[XT, YT mathex.Number](x XT, y YT) Int32 {
-	return NewT[int32](x, y)
+func MakeInt32[XT, YT mathex.Number](x XT, y YT) Int32 {
+	return MakeT[int32](x, y)
 }
 
-func NewInt16[XT, YT mathex.Number](x XT, y YT) Int16 {
-	return NewT[int16](x, y)
+func MakeInt16[XT, YT mathex.Number](x XT, y YT) Int16 {
+	return MakeT[int16](x, y)
 }
 
-func NewInt8[XT, YT mathex.Number](x XT, y YT) Int8 {
-	return NewT[int8](x, y)
+func MakeInt8[XT, YT mathex.Number](x XT, y YT) Int8 {
+	return MakeT[int8](x, y)
 }
 
-func NewPolarT[T mathex.SignedNumber, RT, PHIT mathex.Number](r RT, phi PHIT) Of[T] {
+func MakePolarT[T mathex.SignedNumber, RT, PHIT mathex.Number](r RT, phi PHIT) Of[T] {
 	return Of[T]{
 		X: T(float64(r) * math.Cos(float64(phi))),
 		Y: T(float64(r) * math.Sin(float64(phi))),
 	}
 }
 
-func NewPolarFloat64[RT, PHIT mathex.Number](r RT, phi PHIT) Float64 {
-	return NewPolarT[float64](r, phi)
+func MakePolarFloat64[RT, PHIT mathex.Number](r RT, phi PHIT) Float64 {
+	return MakePolarT[float64](r, phi)
 }
 
-func NewPolarFloat32[RT, PHIT mathex.Number](r RT, phi PHIT) Float32 {
-	return NewPolarT[float32](r, phi)
+func MakePolarFloat32[RT, PHIT mathex.Number](r RT, phi PHIT) Float32 {
+	return MakePolarT[float32](r, phi)
 }
 
-func NewPolarInt[RT, PHIT mathex.Number](r RT, phi PHIT) Int {
-	return NewPolarT[int](r, phi)
+func MakePolarInt[RT, PHIT mathex.Number](r RT, phi PHIT) Int {
+	return MakePolarT[int](r, phi)
 }
 
-func NewPolarInt64[RT, PHIT mathex.Number](r RT, phi PHIT) Int64 {
-	return NewPolarT[int64](r, phi)
+func MakePolarInt64[RT, PHIT mathex.Number](r RT, phi PHIT) Int64 {
+	return MakePolarT[int64](r, phi)
 }
 
-func NewPolarInt32[RT, PHIT mathex.Number](r RT, phi PHIT) Int32 {
-	return NewPolarT[int32](r, phi)
+func MakePolarInt32[RT, PHIT mathex.Number](r RT, phi PHIT) Int32 {
+	return MakePolarT[int32](r, phi)
 }
 
-func NewPolarInt16[RT, PHIT mathex.Number](r RT, phi PHIT) Int16 {
-	return NewPolarT[int16](r, phi)
+func MakePolarInt16[RT, PHIT mathex.Number](r RT, phi PHIT) Int16 {
+	return MakePolarT[int16](r, phi)
 }
 
-func NewPolarInt8[RT, PHIT mathex.Number](r RT, phi PHIT) Int8 {
-	return NewPolarT[int8](r, phi)
+func MakePolarInt8[RT, PHIT mathex.Number](r RT, phi PHIT) Int8 {
+	return MakePolarT[int8](r, phi)
 }
 
 func MinFloat64() Float64 {
-	return New[float64](-math.MaxFloat64, -math.MaxFloat64)
+	return Make[float64](-math.MaxFloat64, -math.MaxFloat64)
 }
 
 func MinFloat32() Float32 {
-	return New[float32](-math.MaxFloat32, -math.MaxFloat32)
+	return Make[float32](-math.MaxFloat32, -math.MaxFloat32)
 }
 
 func MinInt() Int {
-	return New[int](math.MinInt, math.MinInt)
+	return Make[int](math.MinInt, math.MinInt)
 }
 
 func MinInt64() Int64 {
-	return New[int64](math.MinInt64, math.MinInt64)
+	return Make[int64](math.MinInt64, math.MinInt64)
 }
 
 func MinInt32() Int32 {
-	return New[int32](math.MinInt32, math.MinInt32)
+	return Make[int32](math.MinInt32, math.MinInt32)
 }
 
 func MinInt16() Int16 {
-	return New[int16](math.MinInt16, math.MinInt16)
+	return Make[int16](math.MinInt16, math.MinInt16)
 }
 
 func MinInt8() Int8 {
-	return New[int8](math.MinInt8, math.MinInt8)
+	return Make[int8](math.MinInt8, math.MinInt8)
 }
 
 func MaxFloat64() Float64 {
-	return New[float64](math.MaxFloat64, math.MaxFloat64)
+	return Make[float64](math.MaxFloat64, math.MaxFloat64)
 }
 
 func MaxFloat32() Float32 {
-	return New[float32](math.MaxFloat32, math.MaxFloat32)
+	return Make[float32](math.MaxFloat32, math.MaxFloat32)
 }
 
 func MaxInt() Int {
-	return New[int](math.MaxInt, math.MaxInt)
+	return Make[int](math.MaxInt, math.MaxInt)
 }
 
 func MaxInt64() Int64 {
-	return New[int64](math.MaxInt64, math.MaxInt64)
+	return Make[int64](math.MaxInt64, math.MaxInt64)
 }
 
 func MaxInt32() Int32 {
-	return New[int32](math.MaxInt32, math.MaxInt32)
+	return Make[int32](math.MaxInt32, math.MaxInt32)
 }
 
 func MaxInt16() Int16 {
-	return New[int16](math.MaxInt16, math.MaxInt16)
+	return Make[int16](math.MaxInt16, math.MaxInt16)
 }
 
 func MaxInt8() Int8 {
-	return New[int8](math.MaxInt8, math.MaxInt8)
+	return Make[int8](math.MaxInt8, math.MaxInt8)
 }
 
 func NanFloat64() Float64 {
-	return New(math.NaN(), math.NaN())
+	return Make(math.NaN(), math.NaN())
 }
 
 func NanFloat32() Float32 {
-	return New(float32(math.NaN()), float32(math.NaN()))
+	return Make(float32(math.NaN()), float32(math.NaN()))
 }
 
 // Fill creates a vector where each component is equal to v
@@ -289,14 +289,14 @@ func Lerp[T mathex.SignedNumber](t float32, a, b Of[T]) Of[T] {
 }
 
 func Min[T mathex.SignedNumber](a, b Of[T]) Of[T] {
-	return New(
+	return Make(
 		min(a.X, b.X),
 		min(a.Y, b.Y),
 	)
 }
 
 func Max[T mathex.SignedNumber](a, b Of[T]) Of[T] {
-	return New(
+	return Make(
 		max(a.X, b.X),
 		max(a.Y, b.Y),
 	)
@@ -422,7 +422,7 @@ func (v Of[T]) Format(format string) string {
 
 // Sqrt applies the Sqrt to each component of the vector
 func (v Of[T]) Sqrt() Of[T] {
-	return New(
+	return Make(
 		mathex.Sqrt(v.X),
 		mathex.Sqrt(v.Y),
 	)
@@ -849,7 +849,7 @@ func (v Of[T]) Round() Of[T] {
 // RoundToInt takes each component of the vector and rounds it to the nearest
 // whole number, and then casts it to a int
 func (v Of[T]) RoundToInt() Of[int] {
-	return New(
+	return Make(
 		int(mathex.Round(v.X)),
 		int(mathex.Round(v.Y)),
 	)
@@ -858,7 +858,7 @@ func (v Of[T]) RoundToInt() Of[int] {
 // RoundToInt takes each component of the vector and rounds it to the nearest
 // whole number, and then casts it to a int
 func (v Of[T]) RoundToVector(scale Of[T]) Of[T] {
-	return New(
+	return Make(
 		mathex.Round(v.X*scale.X)/scale.X,
 		mathex.Round(v.Y*scale.Y)/scale.Y,
 	)
@@ -875,7 +875,7 @@ func (v Of[T]) Ceil() Of[T] {
 // CeilToInt applies the ceil math operation to each component of the vector,
 // and then casts it to a int
 func (v Of[T]) CeilToInt() Of[int] {
-	return New(
+	return Make(
 		int(mathex.Ceil(v.X)),
 		int(mathex.Ceil(v.Y)),
 	)
@@ -891,7 +891,7 @@ func (v Of[T]) Floor() Of[T] {
 // FloorToInt applies the floor math operation to each component of the vector,
 // and then casts it to a int
 func (v Of[T]) FloorToInt() Of[int] {
-	return New(
+	return Make(
 		int(mathex.Floor(v.X)),
 		int(mathex.Floor(v.Y)),
 	)

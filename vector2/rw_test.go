@@ -33,22 +33,22 @@ func (tc readWriteTestCase[T]) test(t *testing.T) {
 func TestReadWrite(t *testing.T) {
 	tests := map[string]testCaseI{
 		"float64": readWriteTestCase[float64]{
-			val: vector2.New(1., 2.),
+			val: vector2.Make(1., 2.),
 		},
 		"float32": readWriteTestCase[float32]{
-			val: vector2.New[float32](1., 2.),
+			val: vector2.Make[float32](1., 2.),
 		},
 		"int8": readWriteTestCase[int8]{
-			val: vector2.New[int8](1., 2.),
+			val: vector2.Make[int8](1., 2.),
 		},
 		"int16": readWriteTestCase[int16]{
-			val: vector2.New[int16](1., 2.),
+			val: vector2.Make[int16](1., 2.),
 		},
 		"int32": readWriteTestCase[int32]{
-			val: vector2.New[int32](1., 2.),
+			val: vector2.Make[int32](1., 2.),
 		},
 		"int64": readWriteTestCase[int64]{
-			val: vector2.New[int64](1., 2.),
+			val: vector2.Make[int64](1., 2.),
 		},
 	}
 

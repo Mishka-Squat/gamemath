@@ -42,7 +42,7 @@ func ClampCompare(f, vmin, vmax float64) float64 {
 func BenchmarkClampMathEx(b *testing.B) {
 	var res int
 	i := r.Int()
-	clamp := vector2.New(r.Int(), r.Int())
+	clamp := vector2.Make(r.Int(), r.Int())
 	imin := clamp.MinComponent()
 	imax := clamp.MaxComponent()
 	b.ResetTimer()
@@ -56,7 +56,7 @@ func BenchmarkClampMathEx(b *testing.B) {
 func BenchmarkClampGenericMinMax(b *testing.B) {
 	var res int
 	i := r.Int()
-	clamp := vector2.New(r.Int(), r.Int())
+	clamp := vector2.Make(r.Int(), r.Int())
 	imin := clamp.MinComponent()
 	imax := clamp.MaxComponent()
 	b.ResetTimer()
@@ -70,7 +70,7 @@ func BenchmarkClampGenericMinMax(b *testing.B) {
 func BenchmarkClampGenericCompare(b *testing.B) {
 	var res int
 	i := r.Int()
-	clamp := vector2.New(r.Int(), r.Int())
+	clamp := vector2.Make(r.Int(), r.Int())
 	imin := clamp.MinComponent()
 	imax := clamp.MaxComponent()
 	b.ResetTimer()
@@ -84,7 +84,7 @@ func BenchmarkClampGenericCompare(b *testing.B) {
 func BenchmarkClampMinMax(b *testing.B) {
 	var res int
 	i := r.Int()
-	clamp := vector2.New(r.Int(), r.Int())
+	clamp := vector2.Make(r.Int(), r.Int())
 	imin := clamp.MinComponent()
 	imax := clamp.MaxComponent()
 	b.ResetTimer()
@@ -99,7 +99,7 @@ func BenchmarkClampMinMax(b *testing.B) {
 func BenchmarkClampCompare(b *testing.B) {
 	var res int
 	i := r.Int()
-	clamp := vector2.New(r.Int(), r.Int())
+	clamp := vector2.Make(r.Int(), r.Int())
 	imin := clamp.MinComponent()
 	imax := clamp.MaxComponent()
 	b.ResetTimer()

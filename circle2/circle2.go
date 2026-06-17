@@ -1,4 +1,4 @@
-package line2
+package circle2
 
 import (
 	"github.com/Mishka-Squat/gamemath/vector2"
@@ -6,8 +6,8 @@ import (
 )
 
 type Of[T mathex.SignedNumber] struct {
-	A vector2.Of[T]
-	B vector2.Of[T]
+	Center vector2.Of[T]
+	Radius T
 }
 
 type (
@@ -20,13 +20,9 @@ type (
 	Int8    = Of[int8]
 )
 
-func Make[T mathex.SignedNumber](a vector2.Of[T], b vector2.Of[T]) Of[T] {
+func Make[T mathex.SignedNumber](center vector2.Of[T], radius T) Of[T] {
 	return Of[T]{
-		A: a,
-		B: b,
+		Center: center,
+		Radius: radius,
 	}
-}
-
-func (l Of[T]) ABC() (a T, b T, c T) {
-	return (l.B.Y - l.A.Y), (l.A.X - l.B.X), (l.B.X*l.A.Y - l.A.X*l.B.Y)
 }

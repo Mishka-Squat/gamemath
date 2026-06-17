@@ -23,7 +23,7 @@ type (
 	Int8    = Of[int8]
 )
 
-func New[T mathex.SignedNumber](a vector2.Of[T], b vector2.Of[T]) Of[T] {
+func Make[T mathex.SignedNumber](a vector2.Of[T], b vector2.Of[T]) Of[T] {
 	return Of[T]{
 		A: a,
 		B: b,
@@ -31,14 +31,14 @@ func New[T mathex.SignedNumber](a vector2.Of[T], b vector2.Of[T]) Of[T] {
 }
 
 func NanFloat64() Float64 {
-	return New(
+	return Make(
 		vector2.NanFloat64(),
 		vector2.NanFloat64(),
 	)
 }
 
 func NanFloat32() Float32 {
-	return New(
+	return Make(
 		vector2.NanFloat32(),
 		vector2.NanFloat32(),
 	)
@@ -65,7 +65,7 @@ func (v Of[T]) Height() T {
 }
 
 func (v Of[T]) Size() vector2.Of[T] {
-	return vector2.NewT[T](v.Width(), v.Height())
+	return vector2.MakeT[T](v.Width(), v.Height())
 }
 
 // Does a fully contain b
@@ -78,7 +78,7 @@ func (a Of[T]) Contains(b Of[T]) bool {
 
 // Get the center of the AABB.
 func (a Of[T]) Center() vector2.Of[T] {
-	return vector2.NewT[T](
+	return vector2.MakeT[T](
 		0.5*float64(a.A.X+a.B.X),
 		0.5*float64(a.A.Y+a.B.Y),
 	)
@@ -86,7 +86,7 @@ func (a Of[T]) Center() vector2.Of[T] {
 
 // Get the extents of the AABB (half-widths).
 func (a Of[T]) Extents() vector2.Of[T] {
-	return vector2.NewT[T](
+	return vector2.MakeT[T](
 		0.5*float64(a.B.X-a.A.X),
 		0.5*float64(a.B.Y-a.A.Y),
 	)

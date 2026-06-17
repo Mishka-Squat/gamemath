@@ -23,7 +23,7 @@ func BenchmarkSumVector(b *testing.B) {
 	var vals []vector3.Float64
 	for _, testLen := range arrLenToTest {
 		vals = make([]vector3.Float64, testLen)
-		add := vector3.New(1., 2., 3.)
+		add := vector3.Make(1., 2., 3.)
 
 		b.Run(fmt.Sprintf("Len-%d", testLen), func(b *testing.B) {
 			for n := 0; n < b.N; n++ {

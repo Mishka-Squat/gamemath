@@ -12,12 +12,12 @@ import (
 func TestArrayBounds(t *testing.T) {
 	// ARRANGE ================================================================
 	pts := []vector3.Float64{
-		vector3.New(-2., 0., 0.),
-		vector3.New(-2., -4., 0.),
-		vector3.New(-1., -2., 1.),
+		vector3.Make(-2., 0., 0.),
+		vector3.Make(-2., -4., 0.),
+		vector3.Make(-1., -2., 1.),
 
-		vector3.New(3., 2., 0.5),
-		vector3.New(3., 1., 5.),
+		vector3.Make(3., 2., 0.5),
+		vector3.Make(3., 1., 5.),
 	}
 
 	// ACT ====================================================================
@@ -36,10 +36,10 @@ func TestArrayBounds(t *testing.T) {
 func TestArrayDistance(t *testing.T) {
 	// ARRANGE ================================================================
 	pts := []vector3.Float64{
-		vector3.New(0., 0., 0.),
-		vector3.New(0., 1., 0.),
-		vector3.New(0., 1., 1.),
-		vector3.New(0., 1., -1.),
+		vector3.Make(0., 0., 0.),
+		vector3.Make(0., 1., 0.),
+		vector3.Make(0., 1., 1.),
+		vector3.Make(0., 1., -1.),
 	}
 
 	// ACT ====================================================================
@@ -52,7 +52,7 @@ func TestArrayDistance(t *testing.T) {
 func TestArrayDistanceWithOnlyOnePoint(t *testing.T) {
 	// ARRANGE ================================================================
 	pts := []vector3.Float64{
-		vector3.New(0., 1., 0.),
+		vector3.Make(0., 1., 0.),
 	}
 
 	// ACT ====================================================================
@@ -134,11 +134,11 @@ func TestArrayStandardDeviation(t *testing.T) {
 func TestArray_Add(t *testing.T) {
 	// ARRANGE ================================================================
 	arr := vector3.Float64Array([]vector3.Float64{
-		vector3.New(0., 0., 0.),
-		vector3.New(1., 0., 0.),
-		vector3.New(2., 0., 0.),
+		vector3.Make(0., 0., 0.),
+		vector3.Make(1., 0., 0.),
+		vector3.Make(2., 0., 0.),
 	})
-	add := vector3.New(1., 2., 3.)
+	add := vector3.Make(1., 2., 3.)
 
 	// ACT ====================================================================
 	added := arr.Add(add)
@@ -152,46 +152,46 @@ func TestArray_Add(t *testing.T) {
 func TestArray_AddInplace(t *testing.T) {
 	// ARRANGE ================================================================
 	arr := vector3.Float64Array([]vector3.Float64{
-		vector3.New(0., 0., 0.),
-		vector3.New(1., 0., 0.),
-		vector3.New(2., 0., 0.),
+		vector3.Make(0., 0., 0.),
+		vector3.Make(1., 0., 0.),
+		vector3.Make(2., 0., 0.),
 	})
-	add := vector3.New(1., 2., 3.)
+	add := vector3.Make(1., 2., 3.)
 
 	// ACT ====================================================================
 	arr.AddInplace(add)
 
 	// ASSERT =================================================================
-	assert.Equal(t, vector3.New(1., 2., 3.), arr[0])
-	assert.Equal(t, vector3.New(2., 2., 3.), arr[1])
-	assert.Equal(t, vector3.New(3., 2., 3.), arr[2])
+	assert.Equal(t, vector3.Make(1., 2., 3.), arr[0])
+	assert.Equal(t, vector3.Make(2., 2., 3.), arr[1])
+	assert.Equal(t, vector3.Make(3., 2., 3.), arr[2])
 }
 
 func TestArray_ScaleInplace(t *testing.T) {
 	// ARRANGE ================================================================
 	arr := vector3.Float64Array([]vector3.Float64{
-		vector3.New(0., 0., 0.),
-		vector3.New(1., 0., 0.),
-		vector3.New(2., 0., 0.),
+		vector3.Make(0., 0., 0.),
+		vector3.Make(1., 0., 0.),
+		vector3.Make(2., 0., 0.),
 	})
 
 	// ACT ====================================================================
 	arr.ScaleInplace(2)
 
 	// ASSERT =================================================================
-	assert.Equal(t, vector3.New(0., 0., 0.), arr[0])
-	assert.Equal(t, vector3.New(2., 0., 0.), arr[1])
-	assert.Equal(t, vector3.New(4., 0., 0.), arr[2])
+	assert.Equal(t, vector3.Make(0., 0., 0.), arr[0])
+	assert.Equal(t, vector3.Make(2., 0., 0.), arr[1])
+	assert.Equal(t, vector3.Make(4., 0., 0.), arr[2])
 }
 
 func TestArray_Sub(t *testing.T) {
 	// ARRANGE ================================================================
 	arr := vector3.Float64Array([]vector3.Float64{
-		vector3.New(0., 0., 0.),
-		vector3.New(1., 0., 0.),
-		vector3.New(2., 0., 0.),
+		vector3.Make(0., 0., 0.),
+		vector3.Make(1., 0., 0.),
+		vector3.Make(2., 0., 0.),
 	})
-	sub := vector3.New(1., 2., 3.)
+	sub := vector3.Make(1., 2., 3.)
 
 	// ACT ====================================================================
 	added := arr.Sub(sub)
@@ -205,27 +205,27 @@ func TestArray_Sub(t *testing.T) {
 func TestArray_SubInplace(t *testing.T) {
 	// ARRANGE ================================================================
 	arr := vector3.Float64Array([]vector3.Float64{
-		vector3.New(0., 0., 0.),
-		vector3.New(1., 0., 0.),
-		vector3.New(2., 0., 0.),
+		vector3.Make(0., 0., 0.),
+		vector3.Make(1., 0., 0.),
+		vector3.Make(2., 0., 0.),
 	})
-	sub := vector3.New(1., 2., 3.)
+	sub := vector3.Make(1., 2., 3.)
 
 	// ACT ====================================================================
 	arr.SubInplace(sub)
 
 	// ASSERT =================================================================
-	assert.Equal(t, vector3.New(-1., -2., -3.), arr[0])
-	assert.Equal(t, vector3.New(0., -2., -3.), arr[1])
-	assert.Equal(t, vector3.New(1., -2., -3.), arr[2])
+	assert.Equal(t, vector3.Make(-1., -2., -3.), arr[0])
+	assert.Equal(t, vector3.Make(0., -2., -3.), arr[1])
+	assert.Equal(t, vector3.Make(1., -2., -3.), arr[2])
 }
 
 func TestArray_ContainsNaN_True(t *testing.T) {
 	// ARRANGE ================================================================
 	arr := vector3.Float64Array([]vector3.Float64{
-		vector3.New(0., 0., 0.),
-		vector3.New(1., 0., 0.),
-		vector3.New(2., math.NaN(), 0.),
+		vector3.Make(0., 0., 0.),
+		vector3.Make(1., 0., 0.),
+		vector3.Make(2., math.NaN(), 0.),
 	})
 
 	// ACT ====================================================================
@@ -235,9 +235,9 @@ func TestArray_ContainsNaN_True(t *testing.T) {
 func TestArray_ContainsNaN_False(t *testing.T) {
 	// ARRANGE ================================================================
 	arr := vector3.Float64Array([]vector3.Float64{
-		vector3.New(0., 0., 0.),
-		vector3.New(1., 0., 0.),
-		vector3.New(2., 0., 0.),
+		vector3.Make(0., 0., 0.),
+		vector3.Make(1., 0., 0.),
+		vector3.Make(2., 0., 0.),
 	})
 
 	// ACT ====================================================================
@@ -247,9 +247,9 @@ func TestArray_ContainsNaN_False(t *testing.T) {
 func TestArray_MaxLength(t *testing.T) {
 	// ARRANGE ================================================================
 	arr := vector3.Float64Array([]vector3.Float64{
-		vector3.New(0., 0., 0.),
-		vector3.New(1., 0., 0.),
-		vector3.New(2., 0., 0.),
+		vector3.Make(0., 0., 0.),
+		vector3.Make(1., 0., 0.),
+		vector3.Make(2., 0., 0.),
 	})
 
 	// ACT ====================================================================
@@ -259,9 +259,9 @@ func TestArray_MaxLength(t *testing.T) {
 func TestArray_Sum(t *testing.T) {
 	// ARRANGE ================================================================
 	arr := vector3.Float64Array([]vector3.Float64{
-		vector3.New(0., 1., 2.),
-		vector3.New(3., 4., 5.),
-		vector3.New(6., 7., 8.),
+		vector3.Make(0., 1., 2.),
+		vector3.Make(3., 4., 5.),
+		vector3.Make(6., 7., 8.),
 	})
 
 	// ACT ====================================================================

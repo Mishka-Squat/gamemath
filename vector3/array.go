@@ -169,29 +169,29 @@ func (v3a Array[T]) Average(vectors []Of[T]) Of[float64] {
 		zTotal += float64(v.Z)
 	}
 
-	return New(xTotal, yTotal, zTotal).DivByConstant(float64(len(v3a)))
+	return Make(xTotal, yTotal, zTotal).DivByConstant(float64(len(v3a)))
 }
 
 // Bounds returns the min and max points of an AABB encompassing
 func (v3a Array[T]) Bounds() (Of[T], Of[T]) {
-	vmin := New(math.Inf(1), math.Inf(1), math.Inf(1))
-	vmax := New(math.Inf(-1), math.Inf(-1), math.Inf(-1))
+	vmin := Make(math.Inf(1), math.Inf(1), math.Inf(1))
+	vmax := Make(math.Inf(-1), math.Inf(-1), math.Inf(-1))
 
 	for _, v := range v3a {
-		vmin = New(
+		vmin = Make(
 			min(float64(v.X), vmin.X),
 			min(float64(v.Y), vmin.Y),
 			min(float64(v.Z), vmin.Z),
 		)
 
-		vmax = New(
+		vmax = Make(
 			max(float64(v.X), vmax.X),
 			max(float64(v.Y), vmax.Y),
 			max(float64(v.Z), vmax.Z),
 		)
 	}
 
-	return New(T(vmin.X), T(vmin.Y), T(vmin.Z)), New(T(vmax.X), T(vmax.Y), T(vmax.Z))
+	return Make(T(vmin.X), T(vmin.Y), T(vmin.Z)), Make(T(vmax.X), T(vmax.Y), T(vmax.Z))
 }
 
 // StandardDeviation calculates the population standard deviation on each
@@ -207,7 +207,7 @@ func (v3a Array[T]) StandardDeviation() (mean, deviation Of[float64]) {
 		zTotal += (diff.Z * diff.Z)
 	}
 
-	deviation = New(
+	deviation = Make(
 		math.Sqrt(xTotal/float64(len(v3a))),
 		math.Sqrt(yTotal/float64(len(v3a))),
 		math.Sqrt(zTotal/float64(len(v3a))),

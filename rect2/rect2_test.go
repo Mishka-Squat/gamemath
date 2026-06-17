@@ -9,7 +9,7 @@ import (
 )
 
 func TestOperations(t *testing.T) {
-	start := rect2.New(vector2.New(1.2, -2.4), vector2.New(10.8, 12.4))
+	start := rect2.Make(vector2.Make(1.2, -2.4), vector2.Make(10.8, 12.4))
 
 	//randSource := rand.NewSource(42)
 	//r := rand.New(randSource)
@@ -18,31 +18,31 @@ func TestOperations(t *testing.T) {
 		want rect2.Float64
 		got  rect2.Float64
 	}{
-		"x":     {got: start.SetX(4), want: rect2.New(vector2.New(4, -2.4), vector2.New(10.8, 12.4))},
-		"y":     {got: start.SetY(4), want: rect2.New(vector2.New(1.2, 4), vector2.New(10.8, 12.4))},
-		"addx":  {got: start.AddX(4), want: rect2.New(vector2.New(5.2, -2.4), vector2.New(10.8, 12.4))},
-		"addy":  {got: start.AddY(4), want: rect2.New(vector2.New(1.2, 1.6), vector2.New(10.8, 12.4))},
-		"floor": {got: start.Floor(), want: rect2.New(vector2.New(1., -3.), vector2.New(10., 12.))},
-		"ceil":  {got: start.Ceil(), want: rect2.New(vector2.New(2., -2.), vector2.New(11., 13.))},
-		"round": {got: start.Round(), want: rect2.New(vector2.New(1., -2.), vector2.New(11., 12.))},
+		"x":     {got: start.SetX(4), want: rect2.Make(vector2.Make(4, -2.4), vector2.Make(10.8, 12.4))},
+		"y":     {got: start.SetY(4), want: rect2.Make(vector2.Make(1.2, 4), vector2.Make(10.8, 12.4))},
+		"addx":  {got: start.AddX(4), want: rect2.Make(vector2.Make(5.2, -2.4), vector2.Make(10.8, 12.4))},
+		"addy":  {got: start.AddY(4), want: rect2.Make(vector2.Make(1.2, 1.6), vector2.Make(10.8, 12.4))},
+		"floor": {got: start.Floor(), want: rect2.Make(vector2.Make(1., -3.), vector2.Make(10., 12.))},
+		"ceil":  {got: start.Ceil(), want: rect2.Make(vector2.Make(2., -2.), vector2.Make(11., 13.))},
+		"round": {got: start.Round(), want: rect2.Make(vector2.Make(1., -2.), vector2.Make(11., 12.))},
 		//"sqrt":           {got: start.Sqrt(), want: vector2.New(1.0954451, math.NaN())},
 		//"clamp":          {got: start.Clamp(1, 2), want: vector2.New(1.2, 1.)},
 		//"clampv":         {got: start.ClampV(vector2.New(0., 0.8), vector2.New(1., 2)), want: vector2.New(1., 0.8)},
 		//"clamp0v":        {got: start.Clamp0V(vector2.New(1., 2.)), want: vector2.New(1., 0)},
 		//"perpendicular":  {got: start.Perpendicular(), want: vector2.New(-2.4, -1.2)},
 		//"normalized":     {got: start.Normalized(), want: vector2.New(0.447213, -.894427)},
-		"scale":          {got: start.Scale(2.), want: rect2.New(vector2.New(1.2, -2.4), vector2.New(21.6, 24.8))},
-		"scale f":        {got: start.ScaleF(2.), want: rect2.New(vector2.New(1.2, -2.4), vector2.New(21.6, 24.8))},
-		"scale by vec":   {got: start.ScaleByVector(vector2.New(2., 4.)), want: rect2.New(vector2.New(1.2, -2.4), vector2.New(21.6, 49.6))},
-		"scale by vec f": {got: start.ScaleByVectorF(vector2.New[float32](2., 4.)), want: rect2.New(vector2.New(1.2, -2.4), vector2.New(21.6, 49.6))},
-		"scale by xy":    {got: start.ScaleByXY(2., 4.), want: rect2.New(vector2.New(1.2, -2.4), vector2.New(21.6, 49.6))},
-		"scale by xy f":  {got: start.ScaleByXYF(2., 4.), want: rect2.New(vector2.New(1.2, -2.4), vector2.New(21.6, 49.6))},
-		"zoom":           {got: start.Zoom(2.), want: rect2.New(vector2.New(2.4, -4.8), vector2.New(21.6, 24.8))},
-		"zoom f":         {got: start.ZoomF(2.), want: rect2.New(vector2.New(2.4, -4.8), vector2.New(21.6, 24.8))},
-		"zoom by vec":    {got: start.ZoomByVector(vector2.New(2., 4.)), want: rect2.New(vector2.New(2.4, -9.6), vector2.New(21.6, 49.6))},
-		"zoom by vec f":  {got: start.ZoomByVectorF(vector2.New[float32](2., 4.)), want: rect2.New(vector2.New(2.4, -9.6), vector2.New(21.6, 49.6))},
-		"zoom by xy":     {got: start.ZoomByXY(2., 4.), want: rect2.New(vector2.New(2.4, -9.6), vector2.New(21.6, 49.6))},
-		"zoom by xy f":   {got: start.ZoomByXYF(2., 4.), want: rect2.New(vector2.New(2.4, -9.6), vector2.New(21.6, 49.6))},
+		"scale":          {got: start.Scale(2.), want: rect2.Make(vector2.Make(1.2, -2.4), vector2.Make(21.6, 24.8))},
+		"scale f":        {got: start.ScaleF(2.), want: rect2.Make(vector2.Make(1.2, -2.4), vector2.Make(21.6, 24.8))},
+		"scale by vec":   {got: start.ScaleByVector(vector2.Make(2., 4.)), want: rect2.Make(vector2.Make(1.2, -2.4), vector2.Make(21.6, 49.6))},
+		"scale by vec f": {got: start.ScaleByVectorF(vector2.Make[float32](2., 4.)), want: rect2.Make(vector2.Make(1.2, -2.4), vector2.Make(21.6, 49.6))},
+		"scale by xy":    {got: start.ScaleByXY(2., 4.), want: rect2.Make(vector2.Make(1.2, -2.4), vector2.Make(21.6, 49.6))},
+		"scale by xy f":  {got: start.ScaleByXYF(2., 4.), want: rect2.Make(vector2.Make(1.2, -2.4), vector2.Make(21.6, 49.6))},
+		"zoom":           {got: start.Zoom(2.), want: rect2.Make(vector2.Make(2.4, -4.8), vector2.Make(21.6, 24.8))},
+		"zoom f":         {got: start.ZoomF(2.), want: rect2.Make(vector2.Make(2.4, -4.8), vector2.Make(21.6, 24.8))},
+		"zoom by vec":    {got: start.ZoomByVector(vector2.Make(2., 4.)), want: rect2.Make(vector2.Make(2.4, -9.6), vector2.Make(21.6, 49.6))},
+		"zoom by vec f":  {got: start.ZoomByVectorF(vector2.Make[float32](2., 4.)), want: rect2.Make(vector2.Make(2.4, -9.6), vector2.Make(21.6, 49.6))},
+		"zoom by xy":     {got: start.ZoomByXY(2., 4.), want: rect2.Make(vector2.Make(2.4, -9.6), vector2.Make(21.6, 49.6))},
+		"zoom by xy f":   {got: start.ZoomByXYF(2., 4.), want: rect2.Make(vector2.Make(2.4, -9.6), vector2.Make(21.6, 49.6))},
 		//"mul by vec":    {got: start.MulByVector(vector2.New(2., 4.)), want: vector2.New(2.4, -9.6)},
 		//"div by vec":     {got: start.DivByVector(vector2.New(2., 4.)), want: vector2.New(0.6, -0.6)},
 		//"center":         {got: vector2.Midpoint(start, vector2.New(2.4, 2.4)), want: vector2.New(1.8, 0.)},
@@ -76,33 +76,33 @@ func TestContains(t *testing.T) {
 		expected bool
 	}{
 		"point inside rectangle": {
-			rect:     rect2.New(vector2.New(1.0, 1.0), vector2.New(4.0, 4.0)),
-			point:    vector2.New(2.0, 2.0),
+			rect:     rect2.Make(vector2.Make(1.0, 1.0), vector2.Make(4.0, 4.0)),
+			point:    vector2.Make(2.0, 2.0),
 			expected: true,
 		},
 		"point on edge of rectangle": {
-			rect:     rect2.New(vector2.New(1.0, 1.0), vector2.New(4.0, 4.0)),
-			point:    vector2.New(1.0, 1.0),
+			rect:     rect2.Make(vector2.Make(1.0, 1.0), vector2.Make(4.0, 4.0)),
+			point:    vector2.Make(1.0, 1.0),
 			expected: true,
 		},
 		"point outside rectangle": {
-			rect:     rect2.New(vector2.New(1.0, 1.0), vector2.New(4.0, 4.0)),
-			point:    vector2.New(6.0, 5.0),
+			rect:     rect2.Make(vector2.Make(1.0, 1.0), vector2.Make(4.0, 4.0)),
+			point:    vector2.Make(6.0, 5.0),
 			expected: false,
 		},
 		"point on opposite edge of rectangle": {
-			rect:     rect2.New(vector2.New(1.0, 1.0), vector2.New(4.0, 4.0)),
-			point:    vector2.New(4.0, 4.0),
+			rect:     rect2.Make(vector2.Make(1.0, 1.0), vector2.Make(4.0, 4.0)),
+			point:    vector2.Make(4.0, 4.0),
 			expected: true,
 		},
 		"point outside negative coordinates": {
-			rect:     rect2.New(vector2.New(-5.0, -5.0), vector2.New(10.0, 10.0)),
-			point:    vector2.New(-6.0, -6.0),
+			rect:     rect2.Make(vector2.Make(-5.0, -5.0), vector2.Make(10.0, 10.0)),
+			point:    vector2.Make(-6.0, -6.0),
 			expected: false,
 		},
 		"point inside negative coordinates": {
-			rect:     rect2.New(vector2.New(-5.0, -5.0), vector2.New(10.0, 10.0)),
-			point:    vector2.New(-4.0, -4.0),
+			rect:     rect2.Make(vector2.Make(-5.0, -5.0), vector2.Make(10.0, 10.0)),
+			point:    vector2.Make(-4.0, -4.0),
 			expected: true,
 		},
 	}

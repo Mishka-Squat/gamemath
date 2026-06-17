@@ -17,8 +17,8 @@ func TestDefaults(t *testing.T) {
 		got  vector4.Float64
 		want vector4.Float64
 	}{
-		"zero": {got: vector4.Zero[float64](), want: vector4.New(0., 0., 0., 0.)},
-		"one":  {got: vector4.One[float64](), want: vector4.New(1., 1., 1., 1.)},
+		"zero": {got: vector4.Zero[float64](), want: vector4.Make(0., 0., 0., 0.)},
+		"one":  {got: vector4.One[float64](), want: vector4.Make(1., 1., 1., 1.)},
 	}
 
 	for name, tc := range tests {
@@ -32,48 +32,48 @@ func TestDefaults(t *testing.T) {
 }
 
 func TestVectorOperations(t *testing.T) {
-	start := vector4.New(1.2, -2.4, 3.7, 4.9)
+	start := vector4.Make(1.2, -2.4, 3.7, 4.9)
 
 	tests := map[string]struct {
 		want vector4.Float64
 		got  vector4.Float64
 	}{
-		"x":           {want: start.SetX(4), got: vector4.New(4., -2.4, 3.7, 4.9)},
-		"y":           {want: start.SetY(4), got: vector4.New(1.2, 4., 3.7, 4.9)},
-		"z":           {want: start.SetZ(4), got: vector4.New(1.2, -2.4, 4., 4.9)},
-		"w":           {want: start.SetW(4), got: vector4.New(1.2, -2.4, 3.7, 4.)},
-		"dx":          {want: start.AddX(4), got: vector4.New(5.2, -2.4, 3.7, 4.9)},
-		"dy":          {want: start.AddY(4), got: vector4.New(1.2, 1.6, 3.7, 4.9)},
-		"dz":          {want: start.AddZ(4), got: vector4.New(1.2, -2.4, 7.7, 4.9)},
-		"dw":          {want: start.AddW(4), got: vector4.New(1.2, -2.4, 3.7, 8.9)},
-		"add":         {want: start.Add(vector4.New(1., -2., 3., 4.)), got: vector4.New(2.2, -4.4, 6.7, 8.9)},
-		"sub":         {want: start.Sub(vector4.New(1., -2., 3., 4.)), got: vector4.New(0.2, -0.4, 0.7, 0.9)},
-		"div":         {want: start.DivByConstant(2), got: vector4.New(0.6, -1.2, 1.85, 2.45)},
-		"abs":         {want: start.Abs(), got: vector4.New(1.2, 2.4, 3.7, 4.9)},
-		"floor":       {want: start.Floor(), got: vector4.New(1., -3., 3., 4.)},
-		"ceil":        {want: start.Ceil(), got: vector4.New(2., -2., 4., 5.)},
-		"round":       {want: start.Round(), got: vector4.New(1., -2., 4., 5.)},
-		"mulByVector": {want: start.MulByVector(vector4.New(2., 4., 6., 7.)), got: vector4.New(2.4, -9.6, 22.2, 34.3)},
-		"sqrt":        {want: start.Sqrt(), got: vector4.New(1.0954451, math.NaN(), 1.923538, 2.213594)},
-		"clamp":       {want: start.Clamp(1, 2), got: vector4.New(1.2, 1., 2., 2.)},
-		"center":      {want: vector4.Midpoint(start, vector4.New(2.4, 2.4, 4.7, 4.7)), got: vector4.New(1.8, 0., 4.2, 4.8)},
-		"fill":        {want: vector4.Fill(9.3), got: vector4.New(9.3, 9.3, 9.3, 9.3)},
-		"color black": {want: vector4.FromColor(color.Black), got: vector4.New(0., 0., 0., 1.)},
-		"color white": {want: vector4.FromColor(color.White), got: vector4.New(1., 1., 1., 1.)},
-		"flip":        {got: start.Flip(), want: vector4.New(-1.2, 2.4, -3.7, -4.9)},
-		"flipX":       {got: start.FlipX(), want: vector4.New(-1.2, -2.4, 3.7, 4.9)},
-		"flipY":       {got: start.FlipY(), want: vector4.New(1.2, 2.4, 3.7, 4.9)},
-		"flipZ":       {got: start.FlipZ(), want: vector4.New(1.2, -2.4, -3.7, 4.9)},
-		"flipW":       {got: start.FlipW(), want: vector4.New(1.2, -2.4, 3.7, -4.9)},
-		"normalize":   {got: start.Normalized(), want: vector4.New(0.1790845316, -0.35816906, 0.5521773, 0.73126183)},
+		"x":           {want: start.SetX(4), got: vector4.Make(4., -2.4, 3.7, 4.9)},
+		"y":           {want: start.SetY(4), got: vector4.Make(1.2, 4., 3.7, 4.9)},
+		"z":           {want: start.SetZ(4), got: vector4.Make(1.2, -2.4, 4., 4.9)},
+		"w":           {want: start.SetW(4), got: vector4.Make(1.2, -2.4, 3.7, 4.)},
+		"dx":          {want: start.AddX(4), got: vector4.Make(5.2, -2.4, 3.7, 4.9)},
+		"dy":          {want: start.AddY(4), got: vector4.Make(1.2, 1.6, 3.7, 4.9)},
+		"dz":          {want: start.AddZ(4), got: vector4.Make(1.2, -2.4, 7.7, 4.9)},
+		"dw":          {want: start.AddW(4), got: vector4.Make(1.2, -2.4, 3.7, 8.9)},
+		"add":         {want: start.Add(vector4.Make(1., -2., 3., 4.)), got: vector4.Make(2.2, -4.4, 6.7, 8.9)},
+		"sub":         {want: start.Sub(vector4.Make(1., -2., 3., 4.)), got: vector4.Make(0.2, -0.4, 0.7, 0.9)},
+		"div":         {want: start.DivByConstant(2), got: vector4.Make(0.6, -1.2, 1.85, 2.45)},
+		"abs":         {want: start.Abs(), got: vector4.Make(1.2, 2.4, 3.7, 4.9)},
+		"floor":       {want: start.Floor(), got: vector4.Make(1., -3., 3., 4.)},
+		"ceil":        {want: start.Ceil(), got: vector4.Make(2., -2., 4., 5.)},
+		"round":       {want: start.Round(), got: vector4.Make(1., -2., 4., 5.)},
+		"mulByVector": {want: start.MulByVector(vector4.Make(2., 4., 6., 7.)), got: vector4.Make(2.4, -9.6, 22.2, 34.3)},
+		"sqrt":        {want: start.Sqrt(), got: vector4.Make(1.0954451, math.NaN(), 1.923538, 2.213594)},
+		"clamp":       {want: start.Clamp(1, 2), got: vector4.Make(1.2, 1., 2., 2.)},
+		"center":      {want: vector4.Midpoint(start, vector4.Make(2.4, 2.4, 4.7, 4.7)), got: vector4.Make(1.8, 0., 4.2, 4.8)},
+		"fill":        {want: vector4.Fill(9.3), got: vector4.Make(9.3, 9.3, 9.3, 9.3)},
+		"color black": {want: vector4.FromColor(color.Black), got: vector4.Make(0., 0., 0., 1.)},
+		"color white": {want: vector4.FromColor(color.White), got: vector4.Make(1., 1., 1., 1.)},
+		"flip":        {got: start.Flip(), want: vector4.Make(-1.2, 2.4, -3.7, -4.9)},
+		"flipX":       {got: start.FlipX(), want: vector4.Make(-1.2, -2.4, 3.7, 4.9)},
+		"flipY":       {got: start.FlipY(), want: vector4.Make(1.2, 2.4, 3.7, 4.9)},
+		"flipZ":       {got: start.FlipZ(), want: vector4.Make(1.2, -2.4, -3.7, 4.9)},
+		"flipW":       {got: start.FlipW(), want: vector4.Make(1.2, -2.4, 3.7, -4.9)},
+		"normalize":   {got: start.Normalized(), want: vector4.Make(0.1790845316, -0.35816906, 0.5521773, 0.73126183)},
 
 		// Math package functions
-		"log":   {got: start.Log(), want: vector4.New(0.1823215, math.NaN(), 1.308332, 1.589235)},
-		"log10": {got: start.Log10(), want: vector4.New(0.0791812, math.NaN(), 0.568201, 0.690196)},
-		"log2":  {got: start.Log2(), want: vector4.New(0.263034, math.NaN(), 1.887525, 2.292781)},
-		"exp":   {got: start.Exp(), want: vector4.New(3.320116, 0.090717, 40.44731140136719, 134.289794921875)},
-		"exp2":  {got: start.Exp2(), want: vector4.New(2.297396, 0.189464, 12.996038, 29.857057571411133)},
-		"expm1": {got: start.Expm1(), want: vector4.New(2.320116, -0.909282, 39.44730758666992, 133.289794921875)},
+		"log":   {got: start.Log(), want: vector4.Make(0.1823215, math.NaN(), 1.308332, 1.589235)},
+		"log10": {got: start.Log10(), want: vector4.Make(0.0791812, math.NaN(), 0.568201, 0.690196)},
+		"log2":  {got: start.Log2(), want: vector4.Make(0.263034, math.NaN(), 1.887525, 2.292781)},
+		"exp":   {got: start.Exp(), want: vector4.Make(3.320116, 0.090717, 40.44731140136719, 134.289794921875)},
+		"exp2":  {got: start.Exp2(), want: vector4.Make(2.297396, 0.189464, 12.996038, 29.857057571411133)},
+		"expm1": {got: start.Expm1(), want: vector4.Make(2.320116, -0.909282, 39.44730758666992, 133.289794921875)},
 	}
 
 	for name, tc := range tests {
@@ -87,15 +87,15 @@ func TestVectorOperations(t *testing.T) {
 }
 
 func TestToIntConversions(t *testing.T) {
-	start := vector4.New(1.2, -2.4, 3.7, 4.9)
+	start := vector4.Make(1.2, -2.4, 3.7, 4.9)
 
 	tests := map[string]struct {
 		want vector4.Int
 		got  vector4.Int
 	}{
-		"round to int": {want: start.RoundToInt(), got: vector4.New(1, -2, 4, 5)},
-		"floor to int": {want: start.FloorToInt(), got: vector4.New(1, -3, 3, 4)},
-		"ceil to int":  {want: start.CeilToInt(), got: vector4.New(2, -2, 4, 5)},
+		"round to int": {want: start.RoundToInt(), got: vector4.Make(1, -2, 4, 5)},
+		"floor to int": {want: start.FloorToInt(), got: vector4.Make(1, -3, 3, 4)},
+		"ceil to int":  {want: start.CeilToInt(), got: vector4.Make(2, -2, 4, 5)},
 	}
 
 	for name, tc := range tests {
@@ -114,9 +114,9 @@ func TestScaleVecFloat(t *testing.T) {
 		scalar float64
 		want   vector4.Float64
 	}{
-		"1, 2, 3, 4 *  2 =  2,  4,  6,  8": {vec: vector4.New(1., 2., 3., 4.), scalar: 2, want: vector4.New(2., 4., 6., 8.)},
-		"1, 2, 3, 4 *  0 =  0,  0,  0,  0": {vec: vector4.New(1., 2., 3., 4.), scalar: 0, want: vector4.New(0., 0., 0., 0.)},
-		"1, 2, 3, 4 * -2 = -2, -4, -6, -8": {vec: vector4.New(1., 2., 3., 4.), scalar: -2, want: vector4.New(-2., -4., -6., -8.)},
+		"1, 2, 3, 4 *  2 =  2,  4,  6,  8": {vec: vector4.Make(1., 2., 3., 4.), scalar: 2, want: vector4.Make(2., 4., 6., 8.)},
+		"1, 2, 3, 4 *  0 =  0,  0,  0,  0": {vec: vector4.Make(1., 2., 3., 4.), scalar: 0, want: vector4.Make(0., 0., 0., 0.)},
+		"1, 2, 3, 4 * -2 = -2, -4, -6, -8": {vec: vector4.Make(1., 2., 3., 4.), scalar: -2, want: vector4.Make(-2., -4., -6., -8.)},
 	}
 
 	for name, tc := range tests {
@@ -132,13 +132,13 @@ func TestScaleVecFloat(t *testing.T) {
 }
 
 func TestSwizzle_Vector3(t *testing.T) {
-	in := vector4.New(1., 2., 3., 4.)
+	in := vector4.Make(1., 2., 3., 4.)
 
 	tests := map[string]struct {
 		expected vector3.Float64
 		got      vector3.Float64
 	}{
-		"XYZ": {expected: vector3.New(1., 2., 3.), got: in.XYZ()},
+		"XYZ": {expected: vector3.Make(1., 2., 3.), got: in.XYZ()},
 	}
 
 	for name, tc := range tests {
@@ -151,18 +151,18 @@ func TestSwizzle_Vector3(t *testing.T) {
 }
 
 func TestSwizzle_Vector2(t *testing.T) {
-	start := vector4.New(1.2, -2.4, 3.7, 12.)
+	start := vector4.Make(1.2, -2.4, 3.7, 12.)
 
 	tests := map[string]struct {
 		got  vector2.Float64
 		want vector2.Float64
 	}{
-		"xy": {got: start.XY(), want: vector2.New(1.2, -2.4)},
-		"yz": {got: start.YZ(), want: vector2.New(-2.4, 3.7)},
-		"xz": {got: start.XZ(), want: vector2.New(1.2, 3.7)},
-		"yx": {got: start.YX(), want: vector2.New(-2.4, 1.2)},
-		"zy": {got: start.ZY(), want: vector2.New(3.7, -2.4)},
-		"zx": {got: start.ZX(), want: vector2.New(3.7, 1.2)},
+		"xy": {got: start.XY(), want: vector2.Make(1.2, -2.4)},
+		"yz": {got: start.YZ(), want: vector2.Make(-2.4, 3.7)},
+		"xz": {got: start.XZ(), want: vector2.Make(1.2, 3.7)},
+		"yx": {got: start.YX(), want: vector2.Make(-2.4, 1.2)},
+		"zy": {got: start.ZY(), want: vector2.Make(3.7, -2.4)},
+		"zx": {got: start.ZX(), want: vector2.Make(3.7, 1.2)},
 	}
 
 	for name, tc := range tests {
@@ -174,8 +174,8 @@ func TestSwizzle_Vector2(t *testing.T) {
 }
 
 func TestJSON(t *testing.T) {
-	in := vector4.New(1.2, 2.3, 3.4, 5.6)
-	out := vector4.New(0., 0., 0., 0.)
+	in := vector4.Make(1.2, 2.3, 3.4, 5.6)
+	out := vector4.Make(0., 0., 0., 0.)
 
 	marshalledData, marshallErr := json.Marshal(in)
 	unmarshallErr := json.Unmarshal(marshalledData, &out)
@@ -190,7 +190,7 @@ func TestJSON(t *testing.T) {
 }
 
 func TestBadJSON(t *testing.T) {
-	out := vector4.New(0., 0., 0., 0.)
+	out := vector4.Make(0., 0., 0., 0.)
 
 	unmarshallErr := out.UnmarshalJSON([]byte("bad json"))
 
@@ -202,8 +202,8 @@ func TestBadJSON(t *testing.T) {
 }
 
 func TestDot(t *testing.T) {
-	a := vector4.New(2, 3, 4, 5)
-	b := vector4.New(6, 7, 8, 9)
+	a := vector4.Make(2, 3, 4, 5)
+	b := vector4.Make(6, 7, 8, 9)
 
 	assert.Equal(t, 110., a.Dot(b))
 }
@@ -215,10 +215,10 @@ func TestFromArray(t *testing.T) {
 	}{
 		"nil => (0, 0, 0, 0)":          {arr: nil, want: vector4.Zero[float64]()},
 		"[] => (0, 0, 0, 0)":           {arr: []float64{}, want: vector4.Zero[float64]()},
-		"[1] => (1, 0, 0, 0)":          {arr: []float64{1}, want: vector4.New(1., 0., 0., 0.)},
-		"[1, 2] => (1, 2, 0, 0)":       {arr: []float64{1, 2}, want: vector4.New(1., 2., 0., 0.)},
-		"[1, 2, 3] => (1, 2, 3, 0)":    {arr: []float64{1, 2, 3}, want: vector4.New(1., 2., 3., 0.)},
-		"[1, 2, 3, 4] => (1, 2, 3, 4)": {arr: []float64{1, 2, 3, 4}, want: vector4.New(1., 2., 3., 4.)},
+		"[1] => (1, 0, 0, 0)":          {arr: []float64{1}, want: vector4.Make(1., 0., 0., 0.)},
+		"[1, 2] => (1, 2, 0, 0)":       {arr: []float64{1, 2}, want: vector4.Make(1., 2., 0., 0.)},
+		"[1, 2, 3] => (1, 2, 3, 0)":    {arr: []float64{1, 2, 3}, want: vector4.Make(1., 2., 3., 0.)},
+		"[1, 2, 3, 4] => (1, 2, 3, 4)": {arr: []float64{1, 2, 3, 4}, want: vector4.Make(1., 2., 3., 4.)},
 	}
 
 	for name, tc := range tests {
@@ -235,9 +235,9 @@ func TestFromArray(t *testing.T) {
 func TestAverage(t *testing.T) {
 	// ASSIGN =================================================================
 	vals := []vector4.Float64{
-		vector4.New(1., 2., 3., 4.),
-		vector4.New(1., 2., 3., 4.),
-		vector4.New(1., 2., 3., 4.),
+		vector4.Make(1., 2., 3., 4.),
+		vector4.Make(1., 2., 3., 4.),
+		vector4.Make(1., 2., 3., 4.),
 	}
 
 	// ACT ====================================================================
@@ -258,22 +258,22 @@ func TestLerp(t *testing.T) {
 		want  vector4.Float64
 	}{
 		"(0, 0, 0, 0) =(0)=> (0, 0, 0, 0) = (0, 0, 0, 0)": {
-			left:  vector4.New(0., 0., 0., 0.),
-			right: vector4.New(0., 0., 0., 0.),
+			left:  vector4.Make(0., 0., 0., 0.),
+			right: vector4.Make(0., 0., 0., 0.),
 			t:     0,
-			want:  vector4.New(0., 0., 0., 0.),
+			want:  vector4.Make(0., 0., 0., 0.),
 		},
 		"(0, 0, 0, 0) =(0.5)=> (1, 2, 3, 4) = (0.5, 1, 1.5, 2.0)": {
-			left:  vector4.New(0., 0., 0., 0.),
-			right: vector4.New(1., 2., 3., 4.),
+			left:  vector4.Make(0., 0., 0., 0.),
+			right: vector4.Make(1., 2., 3., 4.),
 			t:     0.5,
-			want:  vector4.New(0.5, 1., 1.5, 2.),
+			want:  vector4.Make(0.5, 1., 1.5, 2.),
 		},
 		"(0, 0, 0, 0) =(1)=> (1, 2, 3, 4) = (1, 2, 3, 4)": {
-			left:  vector4.New(0., 0., 0., 0.),
-			right: vector4.New(1., 2., 3., 4.),
+			left:  vector4.Make(0., 0., 0., 0.),
+			right: vector4.Make(1., 2., 3., 4.),
 			t:     1,
-			want:  vector4.New(1., 2., 3., 4.),
+			want:  vector4.Make(1., 2., 3., 4.),
 		},
 	}
 
@@ -295,7 +295,7 @@ func TestMin(t *testing.T) {
 		right vector4.Float64
 		want  vector4.Float64
 	}{
-		"(1, 2, 3, 4) m (4, 3, 2, 1) = (1, 2, 2, 1)": {left: vector4.New(1., 2., 3., 4.), right: vector4.New(4., 3., 2., 1.), want: vector4.New(1., 2., 2., 1.)},
+		"(1, 2, 3, 4) m (4, 3, 2, 1) = (1, 2, 2, 1)": {left: vector4.Make(1., 2., 3., 4.), right: vector4.Make(4., 3., 2., 1.), want: vector4.Make(1., 2., 2., 1.)},
 	}
 
 	for name, tc := range tests {
@@ -316,7 +316,7 @@ func TestMax(t *testing.T) {
 		right vector4.Float64
 		want  vector4.Float64
 	}{
-		"(1, 2, 3, 4) m (4, 3, 2, 1) = (1, 2, 2, 1)": {left: vector4.New(1., 2., 3., 4.), right: vector4.New(4., 3., 2., 1.), want: vector4.New(4., 3., 3., 4.)},
+		"(1, 2, 3, 4) m (4, 3, 2, 1) = (1, 2, 2, 1)": {left: vector4.Make(1., 2., 3., 4.), right: vector4.Make(4., 3., 2., 1.), want: vector4.Make(4., 3., 3., 4.)},
 	}
 
 	for name, tc := range tests {
@@ -332,7 +332,7 @@ func TestMax(t *testing.T) {
 }
 
 func TestToInt(t *testing.T) {
-	in := vector4.New(1.2, 2.3, 3.4, 5.6)
+	in := vector4.Make(1.2, 2.3, 3.4, 5.6)
 	out := in.ToInt()
 	assert.Equal(t, 1, out.X)
 	assert.Equal(t, 2, out.Y)
@@ -341,7 +341,7 @@ func TestToInt(t *testing.T) {
 }
 
 func TestToInt64(t *testing.T) {
-	in := vector4.New(1.2, 2.3, 3.4, 5.6)
+	in := vector4.Make(1.2, 2.3, 3.4, 5.6)
 	out := in.ToInt64()
 	assert.Equal(t, int64(1), out.X)
 	assert.Equal(t, int64(2), out.Y)
@@ -350,7 +350,7 @@ func TestToInt64(t *testing.T) {
 }
 
 func TestToFloat32(t *testing.T) {
-	in := vector4.New(1.2, 2.3, 3.4, 5.6)
+	in := vector4.Make(1.2, 2.3, 3.4, 5.6)
 	out := in.ToFloat32()
 	assert.Equal(t, float32(1.2), out.X)
 	assert.Equal(t, float32(2.3), out.Y)
@@ -359,7 +359,7 @@ func TestToFloat32(t *testing.T) {
 }
 
 func TestToFloat64(t *testing.T) {
-	in := vector4.New(1, 2, 3, 5)
+	in := vector4.Make(1, 2, 3, 5)
 	out := in.ToFloat64()
 	assert.Equal(t, float64(1), out.X)
 	assert.Equal(t, float64(2), out.Y)
@@ -368,11 +368,11 @@ func TestToFloat64(t *testing.T) {
 }
 
 func TestMaxComponent(t *testing.T) {
-	assert.Equal(t, 4., vector4.New(-2., 3., 4., -1.).MaxComponent())
+	assert.Equal(t, 4., vector4.Make(-2., 3., 4., -1.).MaxComponent())
 }
 
 func TestMinComponent(t *testing.T) {
-	assert.Equal(t, -2., vector4.New(-2., 3., 4., -1.).MinComponent())
+	assert.Equal(t, -2., vector4.Make(-2., 3., 4., -1.).MinComponent())
 }
 
 func TestFormat(t *testing.T) {
@@ -381,8 +381,8 @@ func TestFormat(t *testing.T) {
 		formatter string
 		want      string
 	}{
-		"1 2 3 4":    {vec: vector4.New(1, 2, 3, 4), formatter: "%d %d %d %d", want: "1 2 3 4"},
-		"1, 2, 3, 4": {vec: vector4.New(1, 2, 3, 4), formatter: "%d, %d, %d, %d", want: "1, 2, 3, 4"},
+		"1 2 3 4":    {vec: vector4.Make(1, 2, 3, 4), formatter: "%d %d %d %d", want: "1 2 3 4"},
+		"1, 2, 3, 4": {vec: vector4.Make(1, 2, 3, 4), formatter: "%d, %d, %d, %d", want: "1, 2, 3, 4"},
 	}
 
 	for name, tc := range tests {
@@ -398,11 +398,11 @@ func TestContainsNaN(t *testing.T) {
 		vec  vector4.Float64
 		want bool
 	}{
-		"x nan":  {vec: vector4.New(math.NaN(), 0., 0., 0.), want: true},
-		"y nan":  {vec: vector4.New(0., math.NaN(), 0., 0.), want: true},
-		"z nan":  {vec: vector4.New(0., 0., math.NaN(), 0.), want: true},
-		"w nan":  {vec: vector4.New(0., 0., 0., math.NaN()), want: true},
-		"no nan": {vec: vector4.New(0., 0., 0., 0.), want: false},
+		"x nan":  {vec: vector4.Make(math.NaN(), 0., 0., 0.), want: true},
+		"y nan":  {vec: vector4.Make(0., math.NaN(), 0., 0.), want: true},
+		"z nan":  {vec: vector4.Make(0., 0., math.NaN(), 0.), want: true},
+		"w nan":  {vec: vector4.Make(0., 0., 0., math.NaN()), want: true},
+		"no nan": {vec: vector4.Make(0., 0., 0., 0.), want: false},
 	}
 
 	for name, tc := range tests {
@@ -417,9 +417,9 @@ func TestNearZero(t *testing.T) {
 		vec  vector4.Float64
 		want bool
 	}{
-		"0, 0, 0":           {vec: vector4.New(0., 0., 0., 0.), want: true},
-		"0, 0, 1":           {vec: vector4.New(0., 1., 0., 0.), want: false},
-		"0, 0, .0000000001": {vec: vector4.New(0., 0.0000000001, 0., 0.), want: true},
+		"0, 0, 0":           {vec: vector4.Make(0., 0., 0., 0.), want: true},
+		"0, 0, 1":           {vec: vector4.Make(0., 1., 0., 0.), want: false},
+		"0, 0, .0000000001": {vec: vector4.Make(0., 0.0000000001, 0., 0.), want: true},
 	}
 
 	for name, tc := range tests {
@@ -436,23 +436,23 @@ func TestMaxMinComponents(t *testing.T) {
 		f    func(a, b vector4.Float64) float64
 		want float64
 	}{
-		"maxX((0, 0, 0, 0), (1, 0, 0, 0))": {a: vector4.New(0., 0., 0., 0.), b: vector4.New(1., 0., 0., 0.), f: vector4.MaxX[float64], want: 1},
-		"maxX((2, 0, 0, 0), (0, 0, 0, 0))": {a: vector4.New(2., 0., 0., 0.), b: vector4.New(0., 0., 0., 0.), f: vector4.MaxX[float64], want: 2},
-		"maxY((0, 0, 0, 0), (0, 1, 0, 0))": {a: vector4.New(0., 0., 0., 0.), b: vector4.New(0., 1., 0., 0.), f: vector4.MaxY[float64], want: 1},
-		"maxY((0, 2, 0, 0), (0, 0, 0, 0))": {a: vector4.New(0., 2., 0., 0.), b: vector4.New(0., 0., 0., 0.), f: vector4.MaxY[float64], want: 2},
-		"maxZ((0, 0, 0, 0), (0, 0, 1, 0))": {a: vector4.New(0., 0., 0., 0.), b: vector4.New(0., 0., 1., 0.), f: vector4.MaxZ[float64], want: 1},
-		"maxZ((0, 0, 2, 0), (0, 0, 0, 0))": {a: vector4.New(0., 0., 2., 0.), b: vector4.New(0., 0., 0., 0.), f: vector4.MaxZ[float64], want: 2},
-		"maxW((0, 0, 0, 0), (0, 0, 0, 1))": {a: vector4.New(0., 0., 0., 0.), b: vector4.New(0., 0., 0., 1.), f: vector4.MaxW[float64], want: 1},
-		"maxW((0, 0, 0, 2), (0, 0, 0, 0))": {a: vector4.New(0., 0., 0., 2.), b: vector4.New(0., 0., 0., 0.), f: vector4.MaxW[float64], want: 2},
+		"maxX((0, 0, 0, 0), (1, 0, 0, 0))": {a: vector4.Make(0., 0., 0., 0.), b: vector4.Make(1., 0., 0., 0.), f: vector4.MaxX[float64], want: 1},
+		"maxX((2, 0, 0, 0), (0, 0, 0, 0))": {a: vector4.Make(2., 0., 0., 0.), b: vector4.Make(0., 0., 0., 0.), f: vector4.MaxX[float64], want: 2},
+		"maxY((0, 0, 0, 0), (0, 1, 0, 0))": {a: vector4.Make(0., 0., 0., 0.), b: vector4.Make(0., 1., 0., 0.), f: vector4.MaxY[float64], want: 1},
+		"maxY((0, 2, 0, 0), (0, 0, 0, 0))": {a: vector4.Make(0., 2., 0., 0.), b: vector4.Make(0., 0., 0., 0.), f: vector4.MaxY[float64], want: 2},
+		"maxZ((0, 0, 0, 0), (0, 0, 1, 0))": {a: vector4.Make(0., 0., 0., 0.), b: vector4.Make(0., 0., 1., 0.), f: vector4.MaxZ[float64], want: 1},
+		"maxZ((0, 0, 2, 0), (0, 0, 0, 0))": {a: vector4.Make(0., 0., 2., 0.), b: vector4.Make(0., 0., 0., 0.), f: vector4.MaxZ[float64], want: 2},
+		"maxW((0, 0, 0, 0), (0, 0, 0, 1))": {a: vector4.Make(0., 0., 0., 0.), b: vector4.Make(0., 0., 0., 1.), f: vector4.MaxW[float64], want: 1},
+		"maxW((0, 0, 0, 2), (0, 0, 0, 0))": {a: vector4.Make(0., 0., 0., 2.), b: vector4.Make(0., 0., 0., 0.), f: vector4.MaxW[float64], want: 2},
 
-		"minX((0, 0, 0, 0), (-1, 0, 0, 0))": {a: vector4.New(0., 0., 0., 0.), b: vector4.New(-1., 0., 0., 0.), f: vector4.MinX[float64], want: -1},
-		"minX((-2, 0, 0, 0), (0, 0, 0, 0))": {a: vector4.New(-2., 0., 0., 0.), b: vector4.New(0., 0., 0., 0.), f: vector4.MinX[float64], want: -2},
-		"minY((0, 0, 0, 0), (0, -1, 0, 0))": {a: vector4.New(0., 0., 0., 0.), b: vector4.New(0., -1., 0., 0.), f: vector4.MinY[float64], want: -1},
-		"minY((0, -2, 0, 0), (0, 0, 0, 0))": {a: vector4.New(0., -2., 0., 0.), b: vector4.New(0., 0., 0., 0.), f: vector4.MinY[float64], want: -2},
-		"minZ((0, 0, 0, 0), (0, 0, -1, 0))": {a: vector4.New(0., 0., 0., 0.), b: vector4.New(0., 0., -1., 0.), f: vector4.MinZ[float64], want: -1},
-		"minZ((0, 0, -2, 0), (0, 0, 0, 0))": {a: vector4.New(0., 0., -2., 0.), b: vector4.New(0., 0., 0., 0.), f: vector4.MinZ[float64], want: -2},
-		"minW((0, 0, 0, 0), (0, 0, 0, -1))": {a: vector4.New(0., 0., 0., 0.), b: vector4.New(0., 0., 0., -1.), f: vector4.MinW[float64], want: -1},
-		"minW((0, 0, 0, -2), (0, 0, 0, 0))": {a: vector4.New(0., 0., 0., -2.), b: vector4.New(0., 0., 0., 0.), f: vector4.MinW[float64], want: -2},
+		"minX((0, 0, 0, 0), (-1, 0, 0, 0))": {a: vector4.Make(0., 0., 0., 0.), b: vector4.Make(-1., 0., 0., 0.), f: vector4.MinX[float64], want: -1},
+		"minX((-2, 0, 0, 0), (0, 0, 0, 0))": {a: vector4.Make(-2., 0., 0., 0.), b: vector4.Make(0., 0., 0., 0.), f: vector4.MinX[float64], want: -2},
+		"minY((0, 0, 0, 0), (0, -1, 0, 0))": {a: vector4.Make(0., 0., 0., 0.), b: vector4.Make(0., -1., 0., 0.), f: vector4.MinY[float64], want: -1},
+		"minY((0, -2, 0, 0), (0, 0, 0, 0))": {a: vector4.Make(0., -2., 0., 0.), b: vector4.Make(0., 0., 0., 0.), f: vector4.MinY[float64], want: -2},
+		"minZ((0, 0, 0, 0), (0, 0, -1, 0))": {a: vector4.Make(0., 0., 0., 0.), b: vector4.Make(0., 0., -1., 0.), f: vector4.MinZ[float64], want: -1},
+		"minZ((0, 0, -2, 0), (0, 0, 0, 0))": {a: vector4.Make(0., 0., -2., 0.), b: vector4.Make(0., 0., 0., 0.), f: vector4.MinZ[float64], want: -2},
+		"minW((0, 0, 0, 0), (0, 0, 0, -1))": {a: vector4.Make(0., 0., 0., 0.), b: vector4.Make(0., 0., 0., -1.), f: vector4.MinW[float64], want: -1},
+		"minW((0, 0, 0, -2), (0, 0, 0, 0))": {a: vector4.Make(0., 0., 0., -2.), b: vector4.Make(0., 0., 0., 0.), f: vector4.MinW[float64], want: -2},
 	}
 
 	for name, tc := range tests {
@@ -463,7 +463,7 @@ func TestMaxMinComponents(t *testing.T) {
 }
 
 func TestValues(t *testing.T) {
-	x, y, z, w := vector4.New(1, 2, 3, 4).Values()
+	x, y, z, w := vector4.Make(1, 2, 3, 4).Values()
 	assert.Equal(t, x, 1)
 	assert.Equal(t, y, 2)
 	assert.Equal(t, z, 3)
@@ -474,8 +474,8 @@ var result vector4.Float64
 
 func BenchmarkLerp(b *testing.B) {
 	var r vector4.Float64
-	a := vector4.New(1., 2., 3., 7.)
-	c := vector4.New(4., 5., 6., 8.)
+	a := vector4.Make(1., 2., 3., 7.)
+	c := vector4.Make(4., 5., 6., 8.)
 	for i := 0; i < b.N; i++ {
 		r = vector4.Lerp(a, c, float64(i)/float64(b.N))
 	}

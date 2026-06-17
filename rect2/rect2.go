@@ -22,67 +22,67 @@ type (
 	Int8    = Of[int8]
 )
 
-func New[T mathex.SignedNumber](position vector2.Of[T], size vector2.Of[T]) Of[T] {
+func Make[T mathex.SignedNumber](position vector2.Of[T], size vector2.Of[T]) Of[T] {
 	return Of[T]{
 		Position: position,
 		Size:     size,
 	}
 }
 
-func NewSize[T mathex.SignedNumber](size vector2.Of[T]) Of[T] {
+func MakeSize[T mathex.SignedNumber](size vector2.Of[T]) Of[T] {
 	return Of[T]{
 		Position: vector2.Zero[T](),
 		Size:     size,
 	}
 }
 
-func NewXYWH[T mathex.SignedNumber](x, y, w, h T) Of[T] {
+func MakeXYWH[T mathex.SignedNumber](x, y, w, h T) Of[T] {
 	return Of[T]{
-		Position: vector2.New(x, y),
-		Size:     vector2.New(w, h),
+		Position: vector2.Make(x, y),
+		Size:     vector2.Make(w, h),
 	}
 }
 
-func NewT[T mathex.SignedNumber, PT, ST mathex.SignedNumber](position vector2.Of[PT], size vector2.Of[ST]) Of[T] {
+func MakeT[T mathex.SignedNumber, PT, ST mathex.SignedNumber](position vector2.Of[PT], size vector2.Of[ST]) Of[T] {
 	return Of[T]{
 		Position: vector2.To[T](position),
 		Size:     vector2.To[T](size),
 	}
 }
 
-func NewXYWHT[T, XT, YT, WT, HT mathex.SignedNumber](x XT, y YT, w WT, h HT) Of[T] {
+func MakeXYWHT[T, XT, YT, WT, HT mathex.SignedNumber](x XT, y YT, w WT, h HT) Of[T] {
 	return Of[T]{
-		Position: vector2.NewT[T](x, y),
-		Size:     vector2.NewT[T](w, h),
+		Position: vector2.MakeT[T](x, y),
+		Size:     vector2.MakeT[T](w, h),
 	}
 }
 
-func NewFloat64[PT, ST mathex.SignedNumber](position vector2.Of[PT], size vector2.Of[ST]) Float64 {
-	return NewT[float64](position, size)
+func MakeFloat64[PT, ST mathex.SignedNumber](position vector2.Of[PT], size vector2.Of[ST]) Float64 {
+	return MakeT[float64](position, size)
 }
 
-func NewFloat32[PT, ST mathex.SignedNumber](position vector2.Of[PT], size vector2.Of[ST]) Float32 {
-	return NewT[float32](position, size)
+func MakeFloat32[PT, ST mathex.SignedNumber](position vector2.Of[PT], size vector2.Of[ST]) Float32 {
+	return MakeT[float32](position, size)
 }
 
-func NewInt[PT, ST mathex.SignedNumber](position vector2.Of[PT], size vector2.Of[ST]) Int {
-	return NewT[int](position, size)
+func MakeInt[PT, ST mathex.SignedNumber](position vector2.Of[PT], size vector2.Of[ST]) Int {
+	return MakeT[int](position, size)
 }
 
-func NewInt64[PT, ST mathex.SignedNumber](position vector2.Of[PT], size vector2.Of[ST]) Int64 {
-	return NewT[int64](position, size)
+func MakeInt64[PT, ST mathex.SignedNumber](position vector2.Of[PT], size vector2.Of[ST]) Int64 {
+	return MakeT[int64](position, size)
 }
 
-func NewInt32[PT, ST mathex.SignedNumber](position vector2.Of[PT], size vector2.Of[ST]) Int32 {
-	return NewT[int32](position, size)
+func MakeInt32[PT, ST mathex.SignedNumber](position vector2.Of[PT], size vector2.Of[ST]) Int32 {
+	return MakeT[int32](position, size)
 }
 
-func NewInt16[PT, ST mathex.SignedNumber](position vector2.Of[PT], size vector2.Of[ST]) Int16 {
-	return NewT[int16](position, size)
+func MakeInt16[PT, ST mathex.SignedNumber](position vector2.Of[PT], size vector2.Of[ST]) Int16 {
+	return MakeT[int16](position, size)
 }
 
-func NewInt8[PT, ST mathex.SignedNumber](position vector2.Of[PT], size vector2.Of[ST]) Int8 {
-	return NewT[int8](position, size)
+func MakeInt8[PT, ST mathex.SignedNumber](position vector2.Of[PT], size vector2.Of[ST]) Int8 {
+	return MakeT[int8](position, size)
 }
 
 func Zero[T mathex.SignedNumber]() Of[T] {
@@ -145,11 +145,11 @@ func (r Of[T]) SetB(b vector2.Of[T]) Of[T] {
 }
 
 func (r Of[T]) HorizontalLine(y T) (vector2.Of[T], vector2.Of[T]) {
-	return vector2.New(r.A().X, y), vector2.New(r.B().X, y)
+	return vector2.Make(r.A().X, y), vector2.Make(r.B().X, y)
 }
 
 func (r Of[T]) VerticalLine(x T) (vector2.Of[T], vector2.Of[T]) {
-	return vector2.New(x, r.A().Y), vector2.New(x, r.B().Y)
+	return vector2.Make(x, r.A().Y), vector2.Make(x, r.B().Y)
 }
 
 func (r Of[T]) Center() vector2.Of[T] {
@@ -290,7 +290,7 @@ func (r Of[T]) SetPosition(newXY vector2.Of[T]) Of[T] {
 // SetPosition changes the xy component of the rectangle
 func (r Of[T]) SetPositionXY(x, y T) Of[T] {
 	return Of[T]{
-		Position: vector2.New(x, y),
+		Position: vector2.Make(x, y),
 		Size:     r.Size,
 	}
 }
@@ -321,7 +321,7 @@ func (r Of[T]) SetSize(newWH vector2.Of[T]) Of[T] {
 func (r Of[T]) SetSizeXY(width, height T) Of[T] {
 	return Of[T]{
 		Position: r.Position,
-		Size:     vector2.New(width, height),
+		Size:     vector2.Make(width, height),
 	}
 }
 
@@ -342,7 +342,7 @@ func (r Of[T]) AddSizeXY(width, height T) Of[T] {
 // Round takes each component of the rectangle and rounds it to the nearest whole
 // number
 func (v Of[T]) Round() Of[T] {
-	return New(
+	return Make(
 		v.Position.Round(),
 		v.Size.Round(),
 	)
@@ -351,7 +351,7 @@ func (v Of[T]) Round() Of[T] {
 // RoundToInt takes each component of the rectangle and rounds it to the nearest
 // whole number, and then casts it to a int
 func (v Of[T]) RoundToInt() Of[int] {
-	return New(
+	return Make(
 		v.Position.RoundToInt(),
 		v.Size.RoundToInt(),
 	)
@@ -359,7 +359,7 @@ func (v Of[T]) RoundToInt() Of[int] {
 
 // Ceil applies the ceil math operation to each component of the rectangle
 func (v Of[T]) Ceil() Of[T] {
-	return New(
+	return Make(
 		v.Position.Ceil(),
 		v.Size.Ceil(),
 	)
@@ -368,7 +368,7 @@ func (v Of[T]) Ceil() Of[T] {
 // CeilToInt applies the ceil math operation to each component of the rectangle,
 // and then casts it to a int
 func (v Of[T]) CeilToInt() Of[int] {
-	return New(
+	return Make(
 		v.Position.CeilToInt(),
 		v.Size.CeilToInt(),
 	)
@@ -376,7 +376,7 @@ func (v Of[T]) CeilToInt() Of[int] {
 
 // Floor applies the floor math operation to each component of the rectangle
 func (v Of[T]) Floor() Of[T] {
-	return New(
+	return Make(
 		v.Position.Floor(),
 		v.Size.Floor(),
 	)
@@ -385,7 +385,7 @@ func (v Of[T]) Floor() Of[T] {
 // FloorToInt applies the floor math operation to each component of the rectangle,
 // and then casts it to a int
 func (v Of[T]) FloorToInt() Of[int] {
-	return New(
+	return Make(
 		v.Position.FloorToInt(),
 		v.Size.FloorToInt(),
 	)

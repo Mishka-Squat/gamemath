@@ -13,7 +13,7 @@ func BenchmarkAccessVector(b *testing.B) {
 	var r int
 
 	for n := 0; n < b.N; n++ {
-		a := vector3.New(n, n, n)
+		a := vector3.Make(n, n, n)
 		r += a.X + a.Y + a.Z
 	}
 
