@@ -24,7 +24,14 @@ const (
 	Top     Quadrant = 0b0100
 	Bottom  Quadrant = 0b1000
 	Invalid Quadrant = Left | Right | Top | Bottom
+	Outside Quadrant = Left | Right | Top | Bottom
 )
+
+//type Result
+
+func Wrap(Result, Quadrant) {
+
+}
 
 func VectorVector[T mathex.SignedNumber](a vector2.Of[T], b vector2.Of[T]) (Result, Quadrant) {
 	if a.X == b.X && a.Y == b.Y {
@@ -139,4 +146,48 @@ func RectLine[T mathex.SignedNumber](rect rect2.Of[T], line line2.Of[T]) (Result
 
 	// All four corners are on one side from the line
 	return Exclude, qac, qbc
+}
+
+func RectRect[T mathex.SignedNumber](a rect2.Of[T], b rect2.Of[T]) (Result, Quadrant) {
+	ac, aq := RectVector(a, b.A())
+	abc, abq := RectVector(a, b.AB())
+	bc, bq := RectVector(a, b.B())
+	bac, baq := RectVector(a, b.BA())
+
+	if ac == Contains {
+		if abc == Contains {
+			if bc == Contains {
+				if bac == Contains {
+					return Contains, Inside
+				}
+
+				return Partial, baq
+			}
+
+			return Partial, bq
+		}
+
+		return Partial, abq
+	}
+
+	fq := aq | abq | bq | baq
+	concat_q := aq & abq & bq & baq
+
+	if fq == Outside {
+		// concat_q is zero here
+		return Contains, Outside
+	}
+
+	switch concat_q {
+	case Left:
+		return Exclude, Left
+	case Right:
+		return Exclude, Right
+	case Top:
+		return Exclude, Top
+	case Bottom:
+		return Exclude, Bottom
+	}
+
+	return Partial, fq
 }
