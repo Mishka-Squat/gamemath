@@ -178,15 +178,8 @@ func RectRect[T mathex.SignedNumber](a rect2.Of[T], b rect2.Of[T]) (Result, Quad
 		return Contains, Outside
 	}
 
-	switch concat_q {
-	case Left:
-		return Exclude, Left
-	case Right:
-		return Exclude, Right
-	case Top:
-		return Exclude, Top
-	case Bottom:
-		return Exclude, Bottom
+	if (concat_q&Left)|(concat_q&Right)|(concat_q&Top)|(concat_q&Bottom) != 0 {
+		return Exclude, fq
 	}
 
 	return Partial, fq

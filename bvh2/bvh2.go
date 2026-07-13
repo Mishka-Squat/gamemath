@@ -18,6 +18,9 @@ type node[T mathex.SignedNumber, V any] struct {
 }
 
 func (n node[T, V]) siblings() []*node[T, V] {
+	if n.Parent == nil {
+		return []*node[T, V]{}
+	}
 	return n.Parent.Children
 }
 
@@ -70,7 +73,9 @@ func (h *Of[T, V]) move_up(n *node[T, V]) {
 	}
 	parent.Children = parent_siblings
 
-	parent.Parent.Children = parent_siblings
+	if parent.Parent != nil {
+		parent.Parent.Children = parent_siblings
+	}
 
 	parent.Parent = n
 	n.Children = append(n.Children, parent)
@@ -135,7 +140,9 @@ func (h *Of[T, V]) put(parent, n *node[T, V]) {
 			h.move_up(n)
 		}
 	case contains2.Exclude:
-		n.Parent = parent
-		h.move_up(n)
+		// add as sibling here
+		// possibly create virtual parent, or convert to global virtual root
+		//n.Parent = parent
+		//h.move_up(n)
 	}
 }
