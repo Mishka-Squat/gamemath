@@ -74,6 +74,36 @@ func MakeInt8[XT, YT, ZT mathex.Number](x XT, y YT, z ZT) Int8 {
 	return MakeT[int8](x, y, z)
 }
 
+// MakeBarycentricF computes coordinates (u, v, w) using vector methods
+func MakeBarycentricF[T mathex.SignedNumber](p, a, b, c vector2.Of[T]) Of[float32] {
+	// Transform vertices to vectors relative to vertex 'a'
+	v0 := b.Sub(a).ToFloat32()
+	v1 := c.Sub(a).ToFloat32()
+	v2 := p.Sub(a).ToFloat32()
+
+	// Compute dot products using methods
+	d00 := v0.Dot(v0)
+	d01 := v0.Dot(v1)
+	d11 := v1.Dot(v1)
+	d20 := v2.Dot(v0)
+	d21 := v2.Dot(v1)
+
+	// Compute determinant denominator
+	denom := d00*d11 - d01*d01
+
+	// Guard against degenerate triangles (division by zero)
+	if denom == 0 {
+		return Zero[float32]()
+	}
+
+	// Calculate final barycentric weights
+	v := (d11*d20 - d01*d21) / denom
+	w := (d00*d21 - d01*d20) / denom
+	u := 1.0 - v - w
+
+	return Make(u, v, w)
+}
+
 // Fill creates a vector where each component is equal to v
 func Fill[T mathex.SignedNumber](v T) Of[T] {
 	return Of[T]{

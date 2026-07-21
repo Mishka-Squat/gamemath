@@ -706,6 +706,13 @@ func (v Of[T]) ScaleF(t float32) Of[T] {
 	}
 }
 
+func (v Of[T]) ScaleI(t int) Of[T] {
+	return Of[T]{
+		X: v.X * T(t),
+		Y: v.Y * T(t),
+	}
+}
+
 func (v Of[T]) ScaleByVector(o Float64) Of[T] {
 	return Of[T]{
 		X: T(float64(v.X) * o.X),
@@ -895,6 +902,14 @@ func (v Of[T]) FloorToInt() Of[int] {
 		int(mathex.Floor(v.X)),
 		int(mathex.Floor(v.Y)),
 	)
+}
+
+// Frac applies the Frac math operation to each component of the vector
+func (v Of[T]) Fract() Of[T] {
+	return Of[T]{
+		X: mathex.Fract(v.X),
+		Y: mathex.Fract(v.Y),
+	}
 }
 
 // Abs applies the Abs math operation to each component of the vector
