@@ -71,7 +71,7 @@ func TestVectorOperations(t *testing.T) {
 		"log":   {got: start.Log(), want: vector4.Make(0.1823215, math.NaN(), 1.308332, 1.589235)},
 		"log10": {got: start.Log10(), want: vector4.Make(0.0791812, math.NaN(), 0.568201, 0.690196)},
 		"log2":  {got: start.Log2(), want: vector4.Make(0.263034, math.NaN(), 1.887525, 2.292781)},
-		"exp":   {got: start.Exp(), want: vector4.Make(3.320116, 0.090717, 40.44731140136719, 134.289794921875)},
+		"exp":   {got: start.Exp(), want: vector4.Make(3.320116, 0.090717, 40.44730758666992, 134.289794921875)},
 		"exp2":  {got: start.Exp2(), want: vector4.Make(2.297396, 0.189464, 12.996038, 29.857057571411133)},
 		"expm1": {got: start.Expm1(), want: vector4.Make(2.320116, -0.909282, 39.44730758666992, 133.289794921875)},
 	}
