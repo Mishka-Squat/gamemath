@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"math"
-	"math/rand"
+	"math/rand/v2"
 
 	. "github.com/Mishka-Squat/gamemath"
 	"github.com/Mishka-Squat/goex/mathex"
@@ -37,6 +37,13 @@ func MakeT[T mathex.SignedNumber, XT, YT mathex.Number](x XT, y YT) Of[T] {
 	return Of[T]{
 		X: T(x),
 		Y: T(y),
+	}
+}
+
+func Cast[T mathex.SignedNumber, U mathex.SignedNumber](v Of[U]) Of[T] {
+	return Of[T]{
+		X: T(v.X),
+		Y: T(v.Y),
 	}
 }
 
@@ -379,6 +386,13 @@ func Rand(r *rand.Rand) Of[float64] {
 	return Of[float64]{
 		X: r.Float64(),
 		Y: r.Float64(),
+	}
+}
+
+func RandF(r *rand.Rand) Of[float32] {
+	return Of[float32]{
+		X: r.Float32(),
+		Y: r.Float32(),
 	}
 }
 

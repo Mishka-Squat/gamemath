@@ -2,6 +2,7 @@ package rect2
 
 import (
 	"iter"
+	"math/rand/v2"
 
 	"github.com/Mishka-Squat/gamemath/vector2"
 )
@@ -15,5 +16,11 @@ func (r Of[T]) EachUnitCell() iter.Seq[vector2.Of[T]] {
 				}
 			}
 		}
+	}
+}
+
+func (r Of[T]) EachRandomGrid(rnd *rand.Rand) iter.Seq[vector2.Of[T]] {
+	return func(yield func(vector2.Of[T]) bool) {
+
 	}
 }

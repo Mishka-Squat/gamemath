@@ -3,7 +3,7 @@ package vector2_test
 import (
 	"encoding/json"
 	"math"
-	"math/rand"
+	"math/rand/v2"
 	"testing"
 
 	"github.com/Mishka-Squat/gamemath/test"
@@ -51,7 +51,7 @@ func TestDistances(t *testing.T) {
 func TestOperations(t *testing.T) {
 	start := vector2.Make(1.2, -2.4)
 
-	randSource := rand.NewSource(42)
+	randSource := rand.NewPCG(42, 1337)
 	r := rand.New(randSource)
 
 	tests := map[string]struct {

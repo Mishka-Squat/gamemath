@@ -8,6 +8,7 @@ require (
 )
 
 require (
+	deedles.dev/xiter v0.2.1
 	github.com/chewxy/math32 v1.11.2 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/kr/text v0.2.0 // indirect
