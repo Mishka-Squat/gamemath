@@ -3,6 +3,7 @@ package line2
 import (
 	"iter"
 
+	"deedles.dev/xiter"
 	"github.com/Mishka-Squat/gamemath/vector2"
 	"github.com/Mishka-Squat/goex/mathex"
 )
@@ -51,9 +52,12 @@ func Enum[T mathex.SignedNumber](a, b vector2.Of[T]) iter.Seq[vector2.Of[T]] {
 	err := d.X - d.Y
 
 	return func(yield func(vector2.Of[T]) bool) {
-		for p := a; p != b; {
+		for p := a; ; {
 			// Send current coordinate to the caller
 			if !yield(p) {
+				return
+			}
+			if p == b {
 				return
 			}
 
@@ -72,4 +76,26 @@ func Enum[T mathex.SignedNumber](a, b vector2.Of[T]) iter.Seq[vector2.Of[T]] {
 
 func (l Of[T]) Enum() iter.Seq[vector2.Of[T]] {
 	return Enum(l.A, l.B)
+}
+
+func (c Of[T]) EnumScoreCheck() iter.Seq2[vector2.Of[T], *float32] {
+	return func(yield func(vector2.Of[T], *float32) bool) {
+		var score float32
+		for line_i, line_xy := range xiter.Enumerate(Enum(c.A, c.B)) {
+			if line_i == 0 {
+				continue
+			}
+
+			delta_score := score
+			if !yield(line_xy, &delta_score) {
+				return
+			}
+			// returns delta score in score
+			if delta_score < 0 {
+				return
+			} else {
+				score = score + delta_score
+			}
+		}
+	}
 }

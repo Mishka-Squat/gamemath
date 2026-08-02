@@ -12,7 +12,7 @@ func (c Of[T]) Enum() iter.Seq[vector2.Of[T]] {
 	return Enum(c.Center, c.Radius)
 }
 
-func (c Of[T]) EnumVisibilityCheck() iter.Seq2[vector2.Of[T], *float32] {
+func (c Of[T]) EnumScoreCheck() iter.Seq2[vector2.Of[T], *float32] {
 	return func(yield func(vector2.Of[T], *float32) bool) {
 		type ray_t struct {
 			xy    vector2.Of[T]
@@ -21,7 +21,7 @@ func (c Of[T]) EnumVisibilityCheck() iter.Seq2[vector2.Of[T], *float32] {
 		sector_rays := make([][]ray_t, 8)
 		//p8s := slices.Collect(enum8Points(c.Center, c.Center.AddX(c.Radius)))
 		for i := range 8 {
-			sector_rays[i] = make([]ray_t, int(c.Radius))
+			sector_rays[i] = make([]ray_t, int(c.Radius)+1)
 			for ri := range sector_rays[i] {
 				sector_rays[i][ri] = ray_t{vector2.MakeT[T](-1, -1), 0}
 			}
@@ -86,7 +86,7 @@ func (c Of[T]) EnumVisibilityCheck() iter.Seq2[vector2.Of[T], *float32] {
 // rw and rh are width and height radiuses of enumerated region
 func (v Of[T]) EnumCircleAround() iter.Seq[vector2.Of[T]] {
 	return func(yield func(vector2.Of[T]) bool) {
-		for p, score := range v.EnumVisibilityCheck() {
+		for p, score := range v.EnumScoreCheck() {
 			if !yield(p) {
 				return
 			}
