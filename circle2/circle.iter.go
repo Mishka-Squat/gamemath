@@ -13,6 +13,11 @@ func (c Of[T]) Enum() iter.Seq[vector2.Of[T]] {
 }
 
 func (c Of[T]) EnumScoreCheck() iter.Seq2[vector2.Of[T], *float32] {
+	if c.Radius < 1 {
+		return func(yield func(vector2.Of[T], *float32) bool) {
+		}
+	}
+
 	return func(yield func(vector2.Of[T], *float32) bool) {
 		type ray_t struct {
 			xy    vector2.Of[T]

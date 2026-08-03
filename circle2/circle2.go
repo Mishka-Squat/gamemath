@@ -33,6 +33,11 @@ func Make[T mathex.SignedNumber](center vector2.Of[T], radius T) Of[T] {
 // (xc, yc) is the center point, and r is the radius.
 // The yield callback processes each point. Return false to stop early.
 func Enum[T mathex.SignedNumber](c vector2.Of[T], r T) iter.Seq[vector2.Of[T]] {
+	if r < 1 {
+		return func(yield func(vector2.Of[T]) bool) {
+		}
+	}
+
 	return func(yield func(vector2.Of[T]) bool) {
 		p := vector2.Make(0, r)
 		d := 3 - (2 * r) // Initial decision parameter
@@ -56,8 +61,8 @@ func Enum[T mathex.SignedNumber](c vector2.Of[T], r T) iter.Seq[vector2.Of[T]] {
 			}
 
 			// Mirror the newly calculated point across all 8 octants
-			for p := range enum8Points(c, p) {
-				if !yield(p) {
+			for p8 := range enum8Points(c, p) {
+				if !yield(p8) {
 					return
 				}
 			}
