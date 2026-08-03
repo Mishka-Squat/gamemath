@@ -29,8 +29,8 @@ const (
 
 //type Result
 
-func Wrap(Result, Quadrant) {
-
+func Do(r Result, q Quadrant) bool {
+	return r == Contains
 }
 
 func VectorVector[T mathex.SignedNumber](a vector2.Of[T], b vector2.Of[T]) (Result, Quadrant) {
