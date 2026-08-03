@@ -24,7 +24,6 @@ func (c Of[T]) EnumScoreCheck() iter.Seq2[vector2.Of[T], *float32] {
 			score float32
 		}
 		sector_rays := make([][]ray_t, 8)
-		//p8s := slices.Collect(enum8Points(c.Center, c.Center.AddX(c.Radius)))
 		for i := range 8 {
 			sector_rays[i] = make([]ray_t, int(c.Radius)+1)
 			for ri := range sector_rays[i] {
@@ -32,13 +31,17 @@ func (c Of[T]) EnumScoreCheck() iter.Seq2[vector2.Of[T], *float32] {
 			}
 		}
 
+		first_q := 4
 		sector_i := -1
 		for circle_xy := range c.Enum() {
 			sector_i = (sector_i + 1) % 8
 			ray := sector_rays[sector_i]
+			if first_q > 0 {
+				ray = sector_rays[sector_i*2]
+			}
 
 			full_throttle := false
-		line_iter:
+			//line_iter:
 			for line_i, line_xy := range xiter.Enumerate(line2.Enum(c.Center, circle_xy)) {
 				if line_i == 0 {
 					continue
@@ -57,16 +60,19 @@ func (c Of[T]) EnumScoreCheck() iter.Seq2[vector2.Of[T], *float32] {
 						full_throttle = true
 					}
 
-					delta_xy := line_xy.Sub(ray_i.xy)
-					if delta_xy.Y < -1 {
-						break
-					}
+					//delta_xy := line_xy.Sub(ray_i.xy)
+					//if delta_xy.Y < -1 {
+					//	break
+					//}
 					if ray_i.score < ray_pi.score {
 						ray_i.score = ray_pi.score - 1 // guarantee lest later
 					}
 
 					score := ray_pi.score
 					ray_i.xy = line_xy
+					if first_q > 0 {
+						sector_rays[sector_i*2+1][line_i].xy = line_xy
+					}
 
 					if !yield(line_xy, &score) {
 						return
@@ -77,11 +83,18 @@ func (c Of[T]) EnumScoreCheck() iter.Seq2[vector2.Of[T], *float32] {
 					} else {
 						score = ray_pi.score + score
 						if score < ray_i.score {
-							break line_iter
+							break
 						}
 						ray_i.score = score
 					}
+					if first_q > 0 {
+						sector_rays[sector_i*2+1][line_i].score = ray_i.score
+					}
 				}
+			}
+
+			if first_q > 0 {
+				first_q--
 			}
 		}
 	}
