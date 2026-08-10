@@ -36,6 +36,13 @@ func MakeSize[T mathex.SignedNumber](size vector2.Of[T]) Of[T] {
 	}
 }
 
+func MakeAB[T mathex.SignedNumber](a, b vector2.Of[T]) Of[T] {
+	return Of[T]{
+		Position: a,
+		Size:     b.Sub(a),
+	}
+}
+
 func MakeXYWH[T mathex.SignedNumber](x, y, w, h T) Of[T] {
 	return Of[T]{
 		Position: vector2.Make(x, y),
@@ -576,4 +583,11 @@ func (r Of[T]) Pivot(anchor vector2.Of[T], xy vector2.Of[T]) Of[T] {
 		Position: xy.Sub(anchor.MulByVector(r.Size)),
 		Size:     r.Size,
 	}
+}
+
+func (a Of[T]) Union(b Of[T]) Of[T] {
+	return MakeAB(
+		vector2.Min(a.A(), b.A()),
+		vector2.Max(a.B(), b.B()),
+	)
 }

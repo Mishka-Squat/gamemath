@@ -15,6 +15,10 @@ type node[T mathex.SignedNumber, V any] struct {
 	Children []*node[T, V]
 	Bound    rect2.Of[T]
 	Value    V
+	// virtual nodes are synthetic bounding boxes introduced to wrap two
+	// entries that don't nest inside one another; they carry no Value of
+	// their own and Query skips yielding for them.
+	virtual bool
 }
 
 func (n node[T, V]) siblings() []*node[T, V] {
@@ -47,17 +51,37 @@ func (h Of[T, V]) Append(bound rect2.Of[T], value V) Of[T, V] {
 	root_node := h.root
 
 	rc, rq := contains2.RectRect(root_node.Bound, bound)
-	if rc == contains2.Contains {
-		_ = rq
-	} else {
-		// bound is either disjoint from, or only partially overlaps, the
-		// current root, so it can't be placed as a descendant of it. Promote
-		// it to be the new root instead, with the old root as its child.
-		n.Parent = root_node
-		h.move_up(n)
+	switch rc {
+	case contains2.Contains:
+		if rq == contains2.Outside {
+			// bound fully wraps the current root: n's own bound already covers
+			// everything below it, so it can become the new root directly.
+			n.Parent = root_node
+			h.move_up(n)
+		}
+	default:
+		// bound only partially overlaps, or is disjoint from, the current
+		// root, so neither can be a descendant of the other. Wrap both
+		// under a new virtual root whose bound is their union, so the root
+		// always genuinely contains everything beneath it.
+		h.wrap(root_node, n, root_node.Bound.Union(bound))
 	}
 
 	return h
+}
+
+// wrap introduces a new virtual root node with the given bound, making a
+// and b its two children.
+func (h *Of[T, V]) wrap(a, b *node[T, V], bound rect2.Of[T]) {
+	h.nodes = h.nodes.Append(node[T, V]{
+		Bound:   bound,
+		virtual: true,
+	})
+	w := h.nodes.Last()
+	w.Children = []*node[T, V]{a, b}
+	a.Parent = w
+	b.Parent = w
+	h.root = w
 }
 
 func (h *Of[T, V]) move_up(n *node[T, V]) {
@@ -66,13 +90,12 @@ func (h *Of[T, V]) move_up(n *node[T, V]) {
 	parent_siblings := []*node[T, V]{}
 	for _, pn := range parent.siblings() {
 		rc, rq := contains2.RectRect(pn.Bound, n.Bound)
-		switch rc {
-		case contains2.Contains:
-			if rq == contains2.Outside {
-				pn.Parent = n
-				n.Children = append(n.Children, pn)
-			}
-		case contains2.Partial:
+		if rc == contains2.Contains && rq == contains2.Outside {
+			pn.Parent = n
+			n.Children = append(n.Children, pn)
+		} else {
+			// pn isn't wrapped by n (Partial or Exclude): it stays exactly
+			// where it was, as a child of the grandparent.
 			parent_siblings = append(parent_siblings, pn)
 		}
 	}
@@ -90,29 +113,36 @@ func (h *Of[T, V]) move_up(n *node[T, V]) {
 }
 
 func (h Of[T, V]) Query(point vector2.Of[T]) iter.Seq[V] {
-	if h.root == nil {
-		return func(yield func(V) bool) {}
-	}
 	return func(yield func(V) bool) {
-	iterate:
-		for root := h.root; root != nil; {
-			rc, _ := contains2.RectVector(root.Bound, point)
-			if rc == contains2.Contains {
-				if !yield(root.Value) {
-					return
-				}
-				for _, child := range root.Children {
-					rc, _ := contains2.RectVector(child.Bound, point)
-					if rc == contains2.Contains {
-						root = child
-						continue iterate
-					}
-				}
-			}
+		if h.root == nil {
+			return
+		}
+		queryNode(h.root, point, yield)
+	}
+}
 
-			break
+// queryNode visits n and, if its bound contains point, every child whose
+// bound also contains point (there may be more than one: siblings can
+// overlap). It returns false once yield asks the caller to stop.
+func queryNode[T mathex.SignedNumber, V any](n *node[T, V], point vector2.Of[T], yield func(V) bool) bool {
+	rc, _ := contains2.RectVector(n.Bound, point)
+	if rc != contains2.Contains {
+		return true
+	}
+
+	if !n.virtual {
+		if !yield(n.Value) {
+			return false
 		}
 	}
+
+	for _, child := range n.Children {
+		if !queryNode(child, point, yield) {
+			return false
+		}
+	}
+
+	return true
 }
 
 func (h *Of[T, V]) put(parent, n *node[T, V]) {
@@ -133,7 +163,9 @@ func (h *Of[T, V]) put(parent, n *node[T, V]) {
 					case contains2.Outside:
 						h.put(n, child)
 					}
-				case contains2.Partial:
+				default:
+					// child isn't wrapped by n (Partial or Exclude): it
+					// stays exactly where it was, as a child of parent.
 					parent_children = append(parent_children, child)
 				}
 			}
