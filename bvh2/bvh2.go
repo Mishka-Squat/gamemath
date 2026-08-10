@@ -49,7 +49,10 @@ func (h Of[T, V]) Append(bound rect2.Of[T], value V) Of[T, V] {
 	rc, rq := contains2.RectRect(root_node.Bound, bound)
 	if rc == contains2.Contains {
 		_ = rq
-	} else if rc == contains2.Exclude {
+	} else {
+		// bound is either disjoint from, or only partially overlaps, the
+		// current root, so it can't be placed as a descendant of it. Promote
+		// it to be the new root instead, with the old root as its child.
 		n.Parent = root_node
 		h.move_up(n)
 	}
@@ -63,15 +66,16 @@ func (h *Of[T, V]) move_up(n *node[T, V]) {
 	parent_siblings := []*node[T, V]{}
 	for _, pn := range parent.siblings() {
 		rc, rq := contains2.RectRect(pn.Bound, n.Bound)
-		if rc == contains2.Contains {
+		switch rc {
+		case contains2.Contains:
 			if rq == contains2.Outside {
+				pn.Parent = n
 				n.Children = append(n.Children, pn)
 			}
-		} else if rc == contains2.Partial {
+		case contains2.Partial:
 			parent_siblings = append(parent_siblings, pn)
 		}
 	}
-	parent.Children = parent_siblings
 
 	if parent.Parent != nil {
 		parent.Parent.Children = parent_siblings
