@@ -1,6 +1,6 @@
 module github.com/Mishka-Squat/gamemath
 
-go 1.26
+go 1.27
 
 require (
 	github.com/Mishka-Squat/goex v0.1.1
