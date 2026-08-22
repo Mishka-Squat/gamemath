@@ -52,6 +52,8 @@ func (h Of[T, V]) Append(bound rect2.Of[T], value V) Of[T, V] {
 
 	rc, rq := contains2.RectRect(root_node.Bound, bound)
 	switch rc {
+	case contains2.Equal:
+		break
 	case contains2.Contains:
 		if rq == contains2.Outside {
 			// bound fully wraps the current root: n's own bound already covers
@@ -145,32 +147,47 @@ func queryNode[T mathex.SignedNumber, V any](n *node[T, V], point vector2.Of[T],
 	return true
 }
 
+func (h *Of[T, V]) split_children(n *node[T, V], children []*node[T, V]) ([]*node[T, V], bool) {
+	orphaned_children := []*node[T, V]{}
+	for _, child := range children {
+		crc, crq := contains2.RectRect(child.Bound, n.Bound)
+		switch crc {
+		case contains2.Equal:
+			h.put(child, n)
+			return nil, false
+		case contains2.Contains:
+			switch crq {
+			case contains2.Inside:
+				h.put(child, n)
+				return nil, false
+			case contains2.Outside:
+				h.put(n, child)
+			}
+		default:
+			// child isn't wrapped by n (Partial or Exclude): it
+			// stays exactly where it was, as a child of parent.
+			orphaned_children = append(orphaned_children, child)
+		}
+	}
+
+	return orphaned_children, true
+}
+
 func (h *Of[T, V]) put(parent, n *node[T, V]) {
 	rc, rq := contains2.RectRect(parent.Bound, n.Bound)
 	switch rc {
-	case contains2.Contains:
-		switch rq {
-		case contains2.Inside:
-			parent_children := []*node[T, V]{}
-			for _, child := range parent.Children {
-				crc, crq := contains2.RectRect(child.Bound, n.Bound)
-				switch crc {
-				case contains2.Contains:
-					switch crq {
-					case contains2.Inside:
-						h.put(child, n)
-						return
-					case contains2.Outside:
-						h.put(n, child)
-					}
-				default:
-					// child isn't wrapped by n (Partial or Exclude): it
-					// stays exactly where it was, as a child of parent.
-					parent_children = append(parent_children, child)
-				}
-			}
+	case contains2.Equal:
+		if parent_children, ok := h.split_children(n, parent.Children); ok {
 			parent.Children = append(parent_children, n)
 			n.Parent = parent
+		}
+	case contains2.Contains:
+		switch rq {
+		case contains2.Inside: // n is inside parent bounds
+			if parent_children, ok := h.split_children(n, parent.Children); ok {
+				parent.Children = append(parent_children, n)
+				n.Parent = parent
+			}
 		case contains2.Outside:
 			n.Parent = parent
 			h.move_up(n)

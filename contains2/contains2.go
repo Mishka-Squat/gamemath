@@ -13,6 +13,7 @@ const (
 	Exclude Result = iota
 	Partial
 	Contains
+	Equal
 )
 
 type Quadrant int
@@ -30,12 +31,12 @@ const (
 //type Result
 
 func Do(r Result, q Quadrant) bool {
-	return r == Contains
+	return r == Contains || r == Equal
 }
 
 func VectorVector[T mathex.SignedNumber](a vector2.Of[T], b vector2.Of[T]) (Result, Quadrant) {
 	if a.X == b.X && a.Y == b.Y {
-		return Contains, Inside
+		return Equal, 0
 	}
 
 	q := Inside
@@ -149,11 +150,17 @@ func RectLine[T mathex.SignedNumber](rect rect2.Of[T], line line2.Of[T]) (Result
 }
 
 func RectRect[T mathex.SignedNumber](a rect2.Of[T], b rect2.Of[T]) (Result, Quadrant) {
+	if a.Position == b.Position && a.Size == b.Size {
+		return Equal, 0
+	}
+
+	// check all rect points inside a
 	ac, aq := RectVector(a, b.A())
 	abc, abq := RectVector(a, b.AB())
 	bc, bq := RectVector(a, b.B())
 	bac, baq := RectVector(a, b.BA())
 
+	// if a Contains all points b is inside a
 	if ac == Contains {
 		if abc == Contains {
 			if bc == Contains {
