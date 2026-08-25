@@ -9,6 +9,7 @@ import (
 
 	. "github.com/Mishka-Squat/gamemath"
 	"github.com/Mishka-Squat/goex/mathex"
+	"golang.org/x/exp/constraints"
 )
 
 type Of[T mathex.SignedNumber] struct {
@@ -37,6 +38,13 @@ func MakeT[T mathex.SignedNumber, XT, YT mathex.Number](x XT, y YT) Of[T] {
 	return Of[T]{
 		X: T(x),
 		Y: T(y),
+	}
+}
+
+func MakeIndex[T constraints.Signed](i T, stride T) Of[T] {
+	return Of[T]{
+		i % stride,
+		i / stride,
 	}
 }
 
