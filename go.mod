@@ -5,7 +5,8 @@ go 1.27
 require (
 	deedles.dev/xiter v0.2.1
 	github.com/Mishka-Squat/goex v0.1.1
-	github.com/stretchr/testify v1.11.1
+	github.com/stretchr/testify v1.12.1
+	golang.org/x/exp v0.0.0-20260824195058-e88cd73687aa
 )
 
 require (
@@ -13,7 +14,7 @@ require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/kr/text v0.2.0 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	golang.org/x/exp v0.0.0-20260727155853-b88d891fe743 // indirect
+	go.yaml.in/yaml/v3 v3.0.5 // indirect
 	golang.org/x/sys v0.47.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
